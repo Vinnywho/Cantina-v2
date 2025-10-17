@@ -27,7 +27,7 @@ a {
 }
 
 .home {
-    background-image: url('../../assets/group 31.png');
+    /* background-image: url('../../assets/group 31.png'); */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

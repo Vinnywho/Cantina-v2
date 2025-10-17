@@ -24,6 +24,7 @@ import logo from "../../assets/Logovetorizada.svg";
 import instagram from "../../assets/instagram.svg";
 import whatsapp from "../../assets/whatsapp-svgrepo-com 1.svg";
 import mail from "../../assets/mail.svg";
+import backgroundImage from "../../assets/group 31.png";
 
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState("Salgados");
@@ -139,7 +140,7 @@ const Home = () => {
       <div id="navbar">
         <Navbar1/>
       </div>
-      <div className="home">
+      <div className="home" style={{ backgroundImage: `url(${backgroundImage})` }}>
       <section id="home">
           <h2 className='carnelouca'>O MELHOR PÃO COM CARNE LOUCA DA FECAP</h2>
           <h4 id="descricaolandingpage">10 ANOS DE COMEDORIA DA TIA, VENHA JÁ CONHECER! </h4>
