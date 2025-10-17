@@ -18,7 +18,8 @@ a {
 }
 
 .page-container-home {
-    margin-top: -6%;
+    /* CORREÇÃO: Removido o margin-top negativo que causava a faixa branca no mobile. */
+    margin-top: 0; 
     height: auto;
     width: 100%;
     position: relative;
@@ -49,7 +50,7 @@ a {
     flex-direction: column;
     justify-content: center; 
     padding: 0;
-    height: 900px;
+    height: 900px; /* Altura padrão para desktop */
     z-index: 2; 
     color: white;
     max-width: 1200px;
@@ -95,7 +96,7 @@ a {
 
 #favoritos, 
 section:nth-of-type(2) { 
-    height: 900px;
+    height: 900px; /* Altura padrão para desktop */
     padding: 6rem 5%;
     text-align: center;
     z-index: 2; 
@@ -249,10 +250,6 @@ section:nth-of-type(2) h4 {
 
 /* Para telas menores que 768px (Móvel/Tablet) */
 @media (max-width: 768px) {
-
-    .page-container-home {
-    margin-top: -6%;
-    }
     
     #navbar {
         padding: 1rem;
@@ -261,10 +258,12 @@ section:nth-of-type(2) h4 {
     /* --- HOME SECTION IMPROVEMENTS --- */
     #home {
         padding: 0 1rem; 
-        height: 600px; 
+        /* CORREÇÃO: Altura flexível para evitar vazamento ou faixa branca */
+        height: auto; 
+        padding-bottom: 50px; /* Espaçamento na base da seção */
         max-width: 100%;
-        text-align: center; /* Centraliza o conteúdo no mobile */
-        justify-content: flex-start; /* Move o conteúdo para cima */
+        text-align: center;
+        justify-content: flex-start;
         padding-top: 100px;
     }
     
@@ -284,13 +283,13 @@ section:nth-of-type(2) h4 {
     #cardapio {
         padding: 0.8rem 1.5rem;
         font-size: 1rem;
-        margin: 0 auto; /* Centraliza o botão */
+        margin: 0 auto;
     }
     
     #favoritos, 
     section:nth-of-type(2) {
         padding: 4rem 1rem;
-        height: auto; /* Permite que o conteúdo defina a altura */
+        height: auto; 
     }
     
     #titulo-favoritos {
@@ -304,7 +303,7 @@ section:nth-of-type(2) h4 {
         text-align: center;
     }
 
-    #app img:first-child { /* A imagem do aplicativo */
+    #app img:first-child { 
         max-width: 100%; 
         height: auto;
         margin-bottom: 2rem;
@@ -364,7 +363,7 @@ section:nth-of-type(2) h4 {
         margin-top: 1rem;
     }
 
-    /* Reduz o tamanho da imagem do card no mobile (já existia no seu código) */
+    /* Reduz o tamanho da imagem do card no mobile */
     .item-image {
         width: 80px;
         height: 80px;
