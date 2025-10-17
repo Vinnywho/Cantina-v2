@@ -1,0 +1,32 @@
+.category-filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.category-button {
+    padding: 0.5rem 1.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ccc;
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.category-button:hover {
+    background-color: #333;
+    border-color: #4CAF50;
+    color: white;
+}
+
+.category-button.active {
+    background-color: #4CAF50;
+    color: white;
+    border-color: #4CAF50;
+}

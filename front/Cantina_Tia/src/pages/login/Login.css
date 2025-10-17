@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Barrio&family=Bitcount:wght@100..900&family=Cabin:ital,wght@0,400..700;1,400..700&family=Cherry+Bomb+One&family=Coral+Pixels&family=Honk&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "inter", sans-serif;
+}
+
+html{
+    scroll-padding-top: 70px;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+}
+
+#navbar {
+    background-color: #0055ff00;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    padding: 15px 0;
+}
+
+#container-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: auto;
+}
+
+#logo-nav {
+    width: 70px;
+    height: auto;
+}
+
+
+#bloob1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    max-width: 40vw;
+    height: auto;
+    z-index: -1;
+}
+
+#bloob2 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    max-width: 40vw;
+    height: auto;
+    z-index: -1;
+}
+
+#container-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 100px 20px; /* Ajustado para padding geral */
+    gap: 20px;
+    font-family: "Bagel Fat One", cursive;
+    z-index: 1;
+    position: relative;
+}
+
+#container-login h1 {
+    font-size: 60px;
+    color: #244F33;
+    font-family: "Bagel Fat One", cursive;
+}
+
+#container-login form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 300px;
+}
+
+#container-login label {
+    font-size: 18px;
+    color: #244F33;
+    text-align: center;
+}
+
+#container-login input {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 3rem;
+    border: 2px solid #ccc;
+    outline: none;
+    transition: border-color 0.3s ease;
+    font-family: "Bagel Fat One", cursive;
+}
+
+#container-login input:focus {
+    border-color: #244F33;
+}
+
+#login-button {
+    height: 55px;
+    width: 100%;
+    border-radius: 3rem;
+    border: none;
+    background-color: #244F33;
+    color: #ffffff;
+    box-shadow: 0px 4px 22.1px rgba(0, 0, 0, 0.49);
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    font-family: "Bagel Fat One", cursive;
+}
+
+#login-button:hover {
+    transform: scale(1.05);
+}
+
+#container-login p {
+    margin-top: 15px;
+    color: #244F33;
+    font-size: 16px;
+}
+
+#container-login a {
+    color: #244F33;
+    text-decoration: underline;
+}
+
+
+#background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../../assets/fundo.png") no-repeat center center fixed;
+    background-size: cover;
+    opacity: 0.35;
+    filter: hue-rotate(90deg) saturate(1);
+    z-index: -2;
+}
+
+footer{
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #244F33;
+    color: #ffffff;
+    box-sizing: border-box;
+    margin-top: auto;
+  }
+
+.error-message {
+    color: #b94a48;
+    background-color: #f2dede;
+    border: 1px solid #eed3d7;
+    padding: 10px;
+    border-radius: 5px;
+}

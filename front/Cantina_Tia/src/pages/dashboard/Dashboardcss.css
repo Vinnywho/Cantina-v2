@@ -1,0 +1,286 @@
+/* src/pages/Dashboard/Dashboardcss.css */
+@import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root{
+  --bg:#ffffff;
+  --ink:#111;
+  --muted:#6b7280;
+  --brand:#244F33;
+  --card:#fff;
+  --shadow:0 10px 30px rgba(0,0,0,.12);
+  --verde:#28AF57;
+  --laranja:#FF8000;
+  --vermelho:#CA0808;
+  --azul:#0856CA;
+  --pill:#92A89A40;
+}
+
+*{
+  box-sizing:border-box
+}
+html{
+  scroll-behavior:smooth
+}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial
+}
+.page{
+  min-height:100dvh;
+  padding-top: 120px; /* Adiciona espaço no topo para a navbar fixa */
+}
+
+#navbar{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:transparent;
+  /* backdrop-filter:saturate(180%) blur(4px); */
+}
+#container-nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:min(1200px,92%);
+  margin-inline:auto;
+  padding:16px 0;
+}
+#logo-nav{
+  width:64px;
+  height:auto
+}
+#nav-menu{
+  display:flex;
+  gap:12px;
+  align-items:center
+}
+#nav-menu a{
+  text-decoration:none;
+  color:var(--ink);
+  padding:10px 18px;
+  border-radius:12px;
+  font-family:"Bagel Fat One", system-ui;letter-spacing:.5px;font-size:18px;
+}
+#nav-menu a:hover{
+  background:var(--brand);
+  color:#fff
+}
+#login{
+  padding:10px 16px;
+  border-radius:999px;
+  border:1px solid #e5e7eb;
+  background:#fff;
+  cursor:pointer
+}
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:8px
+}
+.burger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  background:transparent;
+  border:0;cursor:pointer;
+  padding:8px;
+  margin-left:4px
+}
+.burger span{
+  width:22px;
+  height:2px;
+  background:var(--ink);
+  display:block;
+  border-radius:1px
+}
+
+@media (max-width:900px){
+  #nav-menu{
+    position:fixed;
+    inset:70px 16px auto 16px;
+    background:#fff;
+    border-radius:16px;
+            box-shadow:var(--shadow);padding:12px;display:grid;gap:8px;transform:scale(.98);opacity:0;pointer-events:none}
+  #nav-menu[data-open="true"]{
+    transform:scale(1);
+    opacity:1;pointer-events:auto
+  }
+  .burger{
+    display:flex
+  }
+}
+
+.wrap{
+  width:min(1200px,92%);
+  margin:0 auto;
+  padding:12px 0 40px
+}
+
+.status{
+  margin-top:12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+  align-items:center;
+  justify-content:flex-start;
+  background:#fff;border-radius:16px;box-shadow:var(--shadow);
+  padding:14px 18px;font-weight:500
+}
+.status-label{
+  margin-right:6px
+}
+.chip{
+  display:flex;
+  align-items:center;
+  gap:8px
+}
+.ponto{
+  width:14px;
+  height:14px;
+  border-radius:999px;
+  display:inline-block
+}
+.ponto--verde{
+  background:var(--verde)
+}
+.ponto--laranja{
+  background:var(--laranja)
+}
+.ponto--vermelho{
+  background:var(--vermelho)
+}
+.ponto--azul{
+  background:var(--azul)
+}
+
+.grid{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns: 2fr 1.2fr;
+  gap:22px;
+  align-items:start
+}
+.card{
+  background:var(--card);
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  padding:18px
+}
+.titulo{
+  font-family:"Bagel Fat One", system-ui;
+  letter-spacing:1px;
+  margin:4px 0 8px 2px;
+  font-size:28px;
+}
+.divider{
+  height:1px;
+  background:#e5e7eb;
+  margin:10px 0 6px;
+}
+
+.orders{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.order{
+  display:grid;
+  grid-template-columns:auto 56px 1fr;
+  align-items:center;
+  gap:10px;
+}
+.order.sub{
+  grid-template-columns:1fr;
+  margin-left:34px;
+  color:var(--muted);
+  font-size:14px
+}
+.order-code{
+  font-family:"Bagel Fat One";
+  font-size:24px;
+  letter-spacing:1px;
+}
+.order-name{
+  font-weight:600;
+}
+.order-items{
+  grid-column:3 / -1;
+  display:flex;
+  flex-direction:column;
+  color:var(--muted);
+  margin-left:2px;
+}
+
+.right-col{
+  display:grid;gap:22px;
+}
+.kpis{
+  display:grid;
+  grid-template-columns:1fr 1fr;gap:16px
+}
+.kpi{
+  background:#8CA49390;
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:150px;
+}
+.kpi-label{
+  font-weight:700;
+  background:var(--pill);
+  padding:8px 14px;
+  border-radius:999px;
+  margin-top:6px;
+}
+.kpi-number{
+  font-family:"Bagel Fat One";
+  font-size:72px;
+  line-height:1;
+  margin:6px 0 10px;
+}
+
+.history .orders--history .order{
+  grid-template-columns:auto 56px 1fr
+}
+
+@media (max-width:1100px){
+  .order-code{
+    font-size:22px
+  }
+  .kpi-number{
+    font-size:60px
+  }
+}
+@media (max-width:900px){
+  .grid{
+    grid-template-columns:1fr
+  }
+  .kpis{
+    grid-template-columns:1fr 1fr
+  }
+}
+@media (max-width:640px){
+  .status{
+    gap:10px
+  }
+  .kpis{
+    grid-template-columns:1fr
+  }
+  .kpi{
+    min-height:120px
+  }
+  .kpi-number{
+    font-size:52px
+  }
+  .titulo{
+    font-size:24px
+  }
+}

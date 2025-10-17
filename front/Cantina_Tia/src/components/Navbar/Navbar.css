@@ -1,0 +1,118 @@
+/* src/components/Navbar/Navbar.css */
+
+#navbar-dashboard {
+    background-color: #ffffff;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    padding: 15px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+#navbar-dashboard #container-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: auto;
+}
+
+#navbar-dashboard #logo-nav {
+    width: 70px;
+    height: auto;
+    z-index: 1001; /* Para ficar acima do menu mobile */
+}
+
+#navbar-dashboard #nav-menu {
+    display: flex;
+    gap: 2rem;
+}
+
+#navbar-dashboard .nav-items {
+    color: #244F33;
+    text-decoration: none;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    position: relative;
+    padding: 10px;
+}
+
+#navbar-dashboard .nav-items::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #244F33;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+#navbar-dashboard .nav-items:hover::after,
+#navbar-dashboard .nav-items.active::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.nav-actions {
+    display: none; /* Escondido em telas maiores */
+}
+
+.burger {
+    display: none; /* Escondido em telas maiores */
+}
+
+/* Estilos para telas menores (mobile) */
+@media (max-width: 768px) {
+    .nav-actions, .burger {
+        display: block;
+        z-index: 1001;
+    }
+
+    .burger {
+        position: relative;
+        width: 30px;
+        height: 22px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+    .burger span {
+        display: block;
+        position: absolute;
+        height: 3px;
+        width: 100%;
+        background: #244F33;
+        border-radius: 9px;
+        opacity: 1;
+        left: 0;
+        transform: rotate(0deg);
+        transition: .25s ease-in-out;
+    }
+
+    .burger span:nth-child(1) { top: 0px; }
+    .burger span:nth-child(2) { top: 9px; }
+    .burger span:nth-child(3) { top: 18px; }
+
+    #nav-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: #fdfdfd;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    #nav-menu[data-open="true"] {
+        transform: translateX(0);
+    }
+}

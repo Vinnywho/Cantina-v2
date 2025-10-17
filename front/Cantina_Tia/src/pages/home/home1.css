@@ -1,0 +1,303 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+    background-color: #121212;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.page-container-home {
+    margin-top: -6%;
+    height: auto;
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.home {
+    background-image: url('../../assets/group 31.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+#background-overlay {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 50, 0, 0.3)); 
+    z-index: 1;
+}
+
+#home {
+    flex-grow: 1; 
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    padding: 0;
+    height: 900px;
+    z-index: 2; 
+    color: white;
+    max-width: 1200px;
+    margin: 0 auto; 
+    text-align: left; 
+}
+
+.carnelouca {
+    font-size: 3.9rem; 
+    width: 70%;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    margin-top: -2rem;
+    /* text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);  */
+}
+
+#descricaolandingpage {
+    font-size: 1.9rem;
+    width: 60%;;
+    font-weight: 300;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+#cardapio {
+    display:block;
+    padding: 1rem 2rem;
+    background-color: white;
+    width: fit-content;
+    color: #121212;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 0.5rem; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#cardapio:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-3px); 
+}
+
+
+
+
+#favoritos, 
+section:nth-of-type(2) { 
+    height: 900px;
+    padding: 6rem 5%;
+    text-align: center;
+    z-index: 2; 
+    background: linear-gradient(to bottom, #1a3824, #121212); /* Degradê de verde escuro para cinza escuro */
+    color: white;
+}
+
+#titulo-favoritos {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #E0FFE0;
+    margin-bottom: 3rem;
+    letter-spacing: 1px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+#cardapio-baixo{
+    background-color: transparent;
+    color: #ffffff; 
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.5rem 1.5rem;
+    border: 2px solid #ffffff;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+#cardapio-baixo:hover {
+    background-color: #244F33;
+    border-color: #244F33; 
+    color: white;
+}
+
+@media (min-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* --- ESTILOS DA SEÇÃO APP --- */
+
+#app {
+    height: auto;
+    padding: 5rem 5%;
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    margin-bottom: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: #1a3824;
+    color: white;
+}
+
+#app div {
+    max-width: 600px;
+}
+
+section:nth-of-type(2) {
+    background: linear-gradient(to bottom, #121212, #1a3824);
+    border-top: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+#titulo-app {
+    font-size: 2.2rem;
+    color: #4CAF50;
+    margin-bottom: 1rem;
+}
+
+#app-store-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    justify-content: center;
+}
+
+#app-store-button {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#play-store-button{
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#app-store-button:hover {
+    transform: scale(1.05);
+}
+#play-store-button:hover {
+    transform: scale(1.05);
+}
+
+section:nth-of-type(2) h4 {
+    max-width: 800px;
+    margin: 0 auto 2rem auto;
+    line-height: 1.7;
+    font-weight: 300;
+    color: #ccc;
+    font-size: 1.1rem;
+}
+
+/* === FOOTER === */
+#contatos {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 220px;
+    background-color: #0A190F !important;
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    border-top: 1px solid #1c1c1c;
+}
+
+#nav-footer {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    justify-content: space-between;
+    gap: 8rem;
+    margin-top: 1rem;
+}
+
+#redes {
+    display: flex;
+    flex-direction: row;
+    gap: 5rem;
+    margin-top: 1.5rem;
+}
+.inf{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page-container-home footer{
+    background-color: #000;
+    color: white
+}
+
+/* === RESPONSIVIDADE (MOBILE FIRST) === */
+
+/* Para telas menores que 768px (Móvel/Tablet) */
+@media (max-width: 768px) {
+    
+    #navbar {
+        padding: 1rem;
+    }
+
+    .carnelouca {
+        font-size: 2.5rem;
+    }
+
+    #descricaolandingpage {
+        font-size: 1rem;
+    }
+
+    #cardapio {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    #favoritos, 
+    section:nth-of-type(2) {
+        padding: 4rem 1rem;
+    }
+    
+    #titulo-favoritos,
+    #titulo-app {
+        font-size: 2rem;
+    }
+
+    /* Reduz o tamanho da imagem do card no mobile */
+    .item-image {
+        width: 80px;
+        height: 80px;
+    }
+
+    .item-details h3 {
+        font-size: 1.1rem;
+    }
+
+    .item-details p.price {
+        font-size: 1.3rem;
+    }
+}
+
+/* Para telas maiores que 1024px (Desktop) */
+@media (min-width: 1024px) {
+    .carnelouca {
+        font-size: 4.5rem;
+    }
+}
