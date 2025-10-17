@@ -27,11 +27,11 @@ a {
 }
 
 .home {
-
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
+
 #background-overlay {
     position: relative;
     top: 0;
@@ -93,16 +93,13 @@ a {
     transform: translateY(-3px); 
 }
 
-
-
-
 #favoritos, 
 section:nth-of-type(2) { 
     height: 900px;
     padding: 6rem 5%;
     text-align: center;
     z-index: 2; 
-    background: linear-gradient(to bottom, #1a3824, #121212); /* Degradê de verde escuro para cinza escuro */
+    background: linear-gradient(to bottom, #1a3824, #121212); 
     color: white;
 }
 
@@ -257,30 +254,113 @@ section:nth-of-type(2) h4 {
         padding: 1rem;
     }
 
+    /* --- HOME SECTION IMPROVEMENTS --- */
+    #home {
+        padding: 0 1rem; 
+        height: 600px; 
+        max-width: 100%;
+        text-align: center; /* Centraliza o conteúdo no mobile */
+        justify-content: flex-start; /* Move o conteúdo para cima */
+        padding-top: 100px;
+    }
+    
     .carnelouca {
         font-size: 2.5rem;
+        width: 100%;
+        margin-top: 0;
+        text-align: center;
     }
 
     #descricaolandingpage {
         font-size: 1rem;
+        width: 100%;
+        text-align: center;
     }
 
     #cardapio {
         padding: 0.8rem 1.5rem;
         font-size: 1rem;
+        margin: 0 auto; /* Centraliza o botão */
     }
     
     #favoritos, 
     section:nth-of-type(2) {
         padding: 4rem 1rem;
+        height: auto; /* Permite que o conteúdo defina a altura */
     }
     
-    #titulo-favoritos,
-    #titulo-app {
+    #titulo-favoritos {
         font-size: 2rem;
     }
+    
+    /* --- APP SECTION IMPROVEMENTS --- */
+    #app {
+        flex-direction: column; 
+        padding: 4rem 1rem;
+        text-align: center;
+    }
 
-    /* Reduz o tamanho da imagem do card no mobile */
+    #app img:first-child { /* A imagem do aplicativo */
+        max-width: 100%; 
+        height: auto;
+        margin-bottom: 2rem;
+    }
+
+    #app div {
+        max-width: 100%; 
+    }
+
+    #titulo-app {
+        font-size: 1.8rem;
+    }
+    
+    #app-store-buttons {
+        justify-content: center;
+        gap: 0.5rem; 
+    }
+    
+    #app-store-button, #play-store-button {
+        width: 45%; 
+        height: auto;
+    }
+
+    section:nth-of-type(2) h4 {
+        font-size: 1rem; 
+    }
+
+
+    /* --- FOOTER SECTION IMPROVEMENTS --- */
+    #contatos {
+        height: auto; 
+        flex-direction: column; 
+        padding: 2rem 1rem;
+        gap: 1.5rem; 
+    }
+
+    #contatos img:first-child { 
+        width: 100px;
+        height: auto;
+        margin-bottom: 1rem;
+    }
+    
+    .inf {
+        width: 100%;
+        align-items: center;
+    }
+
+    #nav-footer {
+        flex-direction: column; 
+        gap: 0.5rem; 
+        text-align: center;
+        margin-top: 0;
+    }
+    
+    #redes {
+        gap: 2rem; 
+        margin-top: 1rem;
+    }
+
+    /* Reduz o tamanho da imagem do card no mobile (já existia no seu código) */
     .item-image {
         width: 80px;
         height: 80px;
