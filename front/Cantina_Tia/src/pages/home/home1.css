@@ -9,7 +9,9 @@
 html, body {
     font-family: 'Poppins', sans-serif;
     scroll-behavior: smooth;
-    background-color: #121212;
+    background-color: #121212; /* Garantindo que o fundo seja escuro */
+    /* NOVO: Impede a rolagem horizontal em telas pequenas */
+    overflow-x: hidden; 
 }
 
 a {
@@ -18,19 +20,22 @@ a {
 }
 
 .page-container-home {
-    /* CORREÇÃO: Removido o margin-top negativo que causava a faixa branca no mobile. */
     margin-top: 0; 
     height: auto;
     width: 100%;
     position: relative;
     display: flex;
     flex-direction: column;
+    /* NOVO: Impede que qualquer elemento dentro cause rolagem horizontal */
+    overflow-x: hidden; 
 }
 
 .home {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    /* NOVO: Garante que a seção home não ultrapasse a largura da tela */
+    width: 100vw; 
 }
 
 #background-overlay {
@@ -65,7 +70,6 @@ a {
     line-height: 1.2;
     margin-bottom: 0.5rem;
     margin-top: -2rem;
-    /* text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);  */
 }
 
 #descricaolandingpage {
@@ -96,12 +100,14 @@ a {
 
 #favoritos, 
 section:nth-of-type(2) { 
-    height: 900px; /* Altura padrão para desktop */
+    height: 900px;
     padding: 6rem 5%;
     text-align: center;
     z-index: 2; 
     background: linear-gradient(to bottom, #1a3824, #121212); 
     color: white;
+    /* NOVO: Garante que o fundo escuro da seção cubra 100% da largura */
+    width: 100%;
 }
 
 #titulo-favoritos {
@@ -156,6 +162,7 @@ section:nth-of-type(2) {
     justify-content: center;
     background-color: #1a3824;
     color: white;
+    width: 100%; /* Garante largura total */
 }
 
 #app div {
@@ -218,6 +225,7 @@ section:nth-of-type(2) h4 {
     text-align: center;
     font-size: 0.9rem;
     border-top: 1px solid #1c1c1c;
+    width: 100%; /* Garante largura total */
 }
 
 #nav-footer {
@@ -254,13 +262,12 @@ section:nth-of-type(2) h4 {
     #navbar {
         padding: 1rem;
     }
-
+    
     /* --- HOME SECTION IMPROVEMENTS --- */
     #home {
         padding: 0 1rem; 
-        /* CORREÇÃO: Altura flexível para evitar vazamento ou faixa branca */
         height: auto; 
-        padding-bottom: 50px; /* Espaçamento na base da seção */
+        padding-bottom: 50px; 
         max-width: 100%;
         text-align: center;
         justify-content: flex-start;
