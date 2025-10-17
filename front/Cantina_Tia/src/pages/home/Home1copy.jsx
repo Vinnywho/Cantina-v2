@@ -24,7 +24,7 @@ import logo from "../../assets/Logovetorizada.svg";
 import instagram from "../../assets/instagram.svg";
 import whatsapp from "../../assets/whatsapp-svgrepo-com 1.svg";
 import mail from "../../assets/mail.svg";
-import backgroundImage from "../../assets/group 31.png";
+import backgroundImage from "../../assets/Group31.png";
 
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState("Salgados");
