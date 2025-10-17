@@ -249,6 +249,10 @@ section:nth-of-type(2) h4 {
 
 /* Para telas menores que 768px (Móvel/Tablet) */
 @media (max-width: 768px) {
+
+    .page-container-home {
+    margin-top: -6%;
+    }
     
     #navbar {
         padding: 1rem;
@@ -256,7 +260,6 @@ section:nth-of-type(2) h4 {
 
     /* --- HOME SECTION IMPROVEMENTS --- */
     #home {
-        margin-top: -6%;
         padding: 0 1rem; 
         height: 600px; 
         max-width: 100%;
