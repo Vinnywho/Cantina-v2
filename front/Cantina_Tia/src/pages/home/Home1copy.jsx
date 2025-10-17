@@ -149,6 +149,7 @@ const Home = () => {
                       id="cardapio" 
                       rel="noopener noreferrer">Cardápio Digital
           </a>
+          <img src="" alt="" />
       </section>
       </div>
 
