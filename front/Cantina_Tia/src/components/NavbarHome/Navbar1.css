@@ -119,9 +119,6 @@
 
 
 @media (max-width: 900px) {
-    #navbar-home #nav-menu-home {
-        display: none; 
-    }
     #login {
         display: none;
     }
@@ -144,7 +141,7 @@
         position: absolute;
         height: 3px;
         width: 100%;
-        background: #244F33; 
+        background: #ffffff; 
         border-radius: 9px;
         opacity: 1;
         left: 0;
@@ -156,35 +153,39 @@
     .burger span:nth-child(2) { top: 9px; }
     .burger span:nth-child(3) { top: 18px; }
 
-    #nav-menu-home[data-open="true"] .burger span:nth-child(1) { transform: rotate(45deg); top: 9px; }
-    #nav-menu-home[data-open="true"] .burger span:nth-child(2) { opacity: 0; left: -60px; }
-    #nav-menu-home[data-open="true"] .burger span:nth-child(3) { transform: rotate(-45deg); top: 9px; }
+    /* Correção: O seletor deve apontar para o botão quando o menu estiver aberto */
+    #nav-menu-home[data-open="true"] ~ .nav-actions .burger span:nth-child(1) { transform: rotate(45deg); top: 9px; }
+    #nav-menu-home[data-open="true"] ~ .nav-actions .burger span:nth-child(2) { opacity: 0; left: -60px; }
+    #nav-menu-home[data-open="true"] ~ .nav-actions .burger span:nth-child(3) { transform: rotate(-45deg); top: 9px; }
+
 
     #nav-menu-home {
         position: fixed;
-        top: 0;
-        right: 0;
-        width: 70%;
-        height: 100vh;
-        background-color: white; 
+        top: 80px;
+        left: 0;
+        width: 100%;
+        height: auto;
+        display: flex;
+        background-color: rgba(18, 18, 18, 0.95);
+        backdrop-filter: blur(5px);
         flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        padding: 0 5%;
-        transform: translateX(100%);
+        align-items: center;
+        padding: 1rem 0;
+        transform: translateY(-150%);
         transition: transform 0.3s ease-in-out;
+        border-bottom: 1px solid #244F33;
     }
 
     #nav-menu-home[data-open="true"] {
-        transform: translateX(0);
+        transform: translateY(0);
     }
 
     #navbar-home .nav-items-home {
-        color: #244F33;
+        color: #ffffff;
         font-size: 1.5rem;
         padding: 15px 0;
         width: 100%;
-        text-align: left;
+        text-align: center;
     }
 
     #navbar-home .nav-items-home::after {
