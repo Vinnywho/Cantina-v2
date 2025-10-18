@@ -18,7 +18,7 @@ a {
 }
 
 .page-container-home {
-    margin-top: -6%;
+    margin-top: 0;
     height: auto;
     width: 100%;
     position: relative;
@@ -26,37 +26,45 @@ a {
     flex-direction: column;
 }
 
+/* === HOME SECTION === */
 .home {
+    position: relative;
     background-image: url('../../assets/Group31.png');
     background-size: cover;
-    background-position: center;
+    background-position: center top;
     background-repeat: no-repeat;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: -80px;
+    overflow: hidden;
 }
 
 #background-overlay {
-    position: relative;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 50, 0, 0.3)); 
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 50, 0, 0.3));
     z-index: 1;
 }
 
 #home {
-    flex-grow: 1; 
     position: relative;
+    z-index: 2;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center; 
-    padding: 0;
-    height: 900px;
-    z-index: 2; 
+    justify-content: center;
+    align-items: center;
     color: white;
-    max-width: 1200px;
-    margin: 0 auto; 
-    text-align: left; 
+    text-align: center;
+    padding: 0 1rem;
 }
+
 
 .carnelouca {
     font-size: 3.9rem; 
@@ -64,20 +72,18 @@ a {
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 0.5rem;
-    margin-top: -2rem;
-    /* text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);  */
 }
 
 #descricaolandingpage {
     font-size: 1.9rem;
-    width: 60%;;
+    width: 60%;
     font-weight: 300;
     margin-bottom: 2rem;
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
 }
 
 #cardapio {
-    display:block;
+    display: block;
     padding: 1rem 2rem;
     background-color: white;
     width: fit-content;
@@ -94,9 +100,9 @@ a {
     transform: translateY(-3px); 
 }
 
-#favoritos, 
-section:nth-of-type(2) { 
-    height: 900px;
+/* === FAVORITOS === */
+#favoritos, section:nth-of-type(2) { 
+    height: auto;
     padding: 6rem 5%;
     text-align: center;
     z-index: 2; 
@@ -119,7 +125,7 @@ section:nth-of-type(2) {
     margin-bottom: 3rem;
 }
 
-#cardapio-baixo{
+#cardapio-baixo {
     background-color: transparent;
     color: #ffffff; 
     font-size: 1rem;
@@ -143,15 +149,13 @@ section:nth-of-type(2) {
     }
 }
 
-/* --- ESTILOS DA SEÇÃO APP --- */
-
+/* === SEÇÃO APP === */
 #app {
     height: auto;
     padding: 5rem 5%;
     display: flex;
     flex-direction: row;
     gap: 1.5rem;
-    margin-bottom: 0;
     align-items: center;
     justify-content: center;
     background-color: #1a3824;
@@ -181,20 +185,12 @@ section:nth-of-type(2) {
     justify-content: center;
 }
 
-#app-store-button {
+#app-store-button, #play-store-button {
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-#play-store-button{
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-#app-store-button:hover {
-    transform: scale(1.05);
-}
-#play-store-button:hover {
+#app-store-button:hover, #play-store-button:hover {
     transform: scale(1.05);
 }
 
@@ -235,40 +231,29 @@ section:nth-of-type(2) h4 {
     gap: 5rem;
     margin-top: 1.5rem;
 }
-.inf{
+
+.inf {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.page-container-home footer{
+.page-container-home footer {
     background-color: #000;
-    color: white
+    color: white;
 }
 
-/* === RESPONSIVIDADE (MOBILE FIRST) === */
-
-/* Para telas menores que 768px (Móvel/Tablet) */
+/* === MOBILE === */
 @media (max-width: 768px) {
-    
-    #navbar {
-        padding: 1rem;
-    }
 
-    /* --- HOME SECTION IMPROVEMENTS --- */
     #home {
-        padding: 0 1rem; 
-        height: 600px; 
-        max-width: 100%;
-        text-align: center; /* Centraliza o conteúdo no mobile */
-        justify-content: flex-start; /* Move o conteúdo para cima */
+        min-height: 100vh;
         padding-top: 100px;
     }
-    
+
     .carnelouca {
         font-size: 2.5rem;
         width: 100%;
-        margin-top: 0;
         text-align: center;
     }
 
@@ -279,58 +264,21 @@ section:nth-of-type(2) h4 {
     }
 
     #cardapio {
-        padding: 0.8rem 1.5rem;
-        font-size: 1rem;
-        margin: 0 auto; /* Centraliza o botão */
+        margin: 0 auto;
     }
-    
-    #favoritos, 
-    section:nth-of-type(2) {
-        padding: 4rem 1rem;
-        height: auto; /* Permite que o conteúdo defina a altura */
-    }
-    
-    #titulo-favoritos {
-        font-size: 2rem;
-    }
-    
-    /* --- APP SECTION IMPROVEMENTS --- */
+
     #app {
-        flex-direction: column; 
+        flex-direction: column;
         padding: 4rem 1rem;
         text-align: center;
     }
 
-    #app img:first-child { /* A imagem do aplicativo */
+    #app img:first-child {
         max-width: 100%; 
         height: auto;
         margin-bottom: 2rem;
     }
 
-    #app div {
-        max-width: 100%; 
-    }
-
-    #titulo-app {
-        font-size: 1.8rem;
-    }
-    
-    #app-store-buttons {
-        justify-content: center;
-        gap: 0.5rem; 
-    }
-    
-    #app-store-button, #play-store-button {
-        width: 45%; 
-        height: auto;
-    }
-
-    section:nth-of-type(2) h4 {
-        font-size: 1rem; 
-    }
-
-
-    /* --- FOOTER SECTION IMPROVEMENTS --- */
     #contatos {
         height: auto; 
         flex-direction: column; 
@@ -338,47 +286,13 @@ section:nth-of-type(2) h4 {
         gap: 1.5rem; 
     }
 
-    #contatos img:first-child { 
-        width: 100px;
-        height: auto;
-        margin-bottom: 1rem;
-    }
-    
-    .inf {
-        width: 100%;
-        align-items: center;
-    }
-
     #nav-footer {
-        flex-direction: column; 
-        gap: 0.5rem; 
+        flex-direction: column;
         text-align: center;
-        margin-top: 0;
+        gap: 0.5rem;
     }
-    
+
     #redes {
-        gap: 2rem; 
-        margin-top: 1rem;
-    }
-
-    /* Reduz o tamanho da imagem do card no mobile (já existia no seu código) */
-    .item-image {
-        width: 80px;
-        height: 80px;
-    }
-
-    .item-details h3 {
-        font-size: 1.1rem;
-    }
-
-    .item-details p.price {
-        font-size: 1.3rem;
-    }
-}
-
-/* Para telas maiores que 1024px (Desktop) */
-@media (min-width: 1024px) {
-    .carnelouca {
-        font-size: 4.5rem;
+        gap: 2rem;
     }
 }
