@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import Modal from '../../components/Modal/Modal';
 import './Menu.css';
+// 1. IMPORTAÇÃO DO CLIENTE SUPABASE
+import { supabase } from '../../../lib/supabaseclient';
 
 const Menu = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -23,23 +25,33 @@ const Menu = () => {
   const [categoryName, setCategoryName] = useState('');
   const [categoryIcon, setCategoryIcon] = useState('');
 
+  // 2. ATUALIZANDO: FUNÇÃO DE BUSCA DE DADOS (GET)
   const fetchData = async () => {
     try {
-      const [productsRes, categoriesRes] = await Promise.all([
-        fetch('http://localhost:3000/api/products'),
-        fetch('http://localhost:3000/api/categories')
-      ]);
-      const productsData = await productsRes.json();
-      const categoriesData = await categoriesRes.json();
-      setProducts(productsData);
-      setCategories(categoriesData);
+      // Busca Produtos
+      const { data: productsData, error: productsError } = await supabase
+        .from('products')
+        .select('*'); // '*' retorna todas as colunas
+        
+      if (productsError) throw productsError;
+
+      // Busca Categorias
+      const { data: categoriesData, error: categoriesError } = await supabase
+        .from('categories')
+        .select('*');
+        
+      if (categoriesError) throw categoriesError;
+
+      setProducts(productsData || []);
+      setCategories(categoriesData || []);
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
-      alert("Não foi possível carregar os dados do cardápio.");
+      alert(error.message || "Não foi possível carregar os dados do cardápio.");
     }
   };
 
   const filteredProducts = products.filter(product => {
+    // ... (Lógica de filtro permanece a mesma)
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = !selectedCategory || product.category_id === selectedCategory;
     return matchesSearch && matchesCategory;
@@ -48,7 +60,8 @@ const Menu = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
+  // ... (Efeitos e Handlers de modal/categoria permanecem os mesmos)
+  
   // Popula o formulário quando o modal abre para edição
   useEffect(() => {
     if (editingProduct) {
@@ -106,88 +119,112 @@ const Menu = () => {
     setIsCategoryModalOpen(false);
     setEditingCategory(null);
   };
-
+  
+  // 3. ATUALIZANDO: SALVAR/EDITAR PRODUTO (POST/PUT)
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     const productData = {
       name: productName,
       price: parseFloat(productPrice),
       category_id: parseInt(productCategory),
-      image: productEmoji,
+      image: productEmoji, // Correspondente à coluna 'image'
     };
-
-    const url = editingProduct
-      ? `http://localhost:3000/api/products/${editingProduct.id}`
-      : 'http://localhost:3000/api/products';
     
-    const method = editingProduct ? 'PUT' : 'POST';
-
     try {
-      const response = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(productData)
-      });
-
-      if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.error || 'Falha ao salvar produto.');
+      if (editingProduct) {
+        // EDIÇÃO (UPDATE)
+        const { error } = await supabase
+          .from('products')
+          .update(productData)
+          .eq('id', editingProduct.id); // 'eq' é a cláusula WHERE
+          
+        if (error) throw error;
+        
+      } else {
+        // ADIÇÃO (INSERT)
+        const { error } = await supabase
+          .from('products')
+          .insert([productData]);
+          
+        if (error) throw error;
       }
 
       handleCloseModal();
       fetchData(); // Re-fetch data to update the list
     } catch (error) {
       console.error('Erro ao salvar produto:', error);
-      alert(error.message);
+      alert(error.message || 'Falha ao salvar produto.');
     }
   };
 
+  // 4. ATUALIZANDO: SALVAR/EDITAR CATEGORIA (POST/PUT)
   const handleCategoryFormSubmit = async (event) => {
     event.preventDefault();
     const categoryData = { name: categoryName, icon: categoryIcon };
 
-    const url = editingCategory
-      ? `http://localhost:3000/api/categories/${editingCategory.id}`
-      : 'http://localhost:3000/api/categories';
-    
-    const method = editingCategory ? 'PUT' : 'POST';
-
     try {
-      const response = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(categoryData)
-      });
-
-      if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.error || 'Falha ao salvar categoria.');
+      if (editingCategory) {
+        // EDIÇÃO (UPDATE)
+        const { error } = await supabase
+          .from('categories')
+          .update(categoryData)
+          .eq('id', editingCategory.id);
+          
+        if (error) throw error;
+        
+      } else {
+        // ADIÇÃO (INSERT)
+        const { error } = await supabase
+          .from('categories')
+          .insert([categoryData]);
+          
+        if (error) throw error;
       }
 
       handleCloseCategoryModal();
       fetchData();
     } catch (error) {
       console.error('Erro ao salvar categoria:', error);
-      alert(error.message);
+      alert(error.message || 'Falha ao salvar categoria.');
     }
   };
 
+  // 5. ATUALIZANDO: DELETAR CATEGORIA (DELETE)
   const handleDeleteCategory = async (categoryId) => {
-    if (window.confirm('Tem certeza que deseja remover esta categoria? Apenas categorias sem produtos podem ser removidas.')) {
-      const response = await fetch(`http://localhost:3000/api/categories/${categoryId}`, {
-        method: 'DELETE'
-      });
-      if (!response.ok) { const err = await response.json(); alert(err.error); return; }
-      fetchData();
+    if (window.confirm('Tem certeza que deseja remover esta categoria? Atenção: Se houver produtos associados, a exclusão irá falhar devido à Chave Estrangeira!')) {
+      try {
+        const { error } = await supabase
+          .from('categories')
+          .delete()
+          .eq('id', categoryId);
+
+        if (error) throw error;
+
+        fetchData();
+      } catch (error) {
+        console.error('Erro ao deletar categoria:', error);
+        // Mensagem mais informativa sobre a restrição de FK
+        alert('Erro ao remover categoria. Verifique se não há produtos associados a ela.' || error.message);
+      }
     }
   };
 
+  // 6. ATUALIZANDO: DELETAR PRODUTO (DELETE)
   const handleDeleteProduct = async (productId) => {
     if (window.confirm('Tem certeza que deseja remover este produto?')) {
-      await fetch(`http://localhost:3000/api/products/${productId}`, {
-        method: 'DELETE'
-      });
-      fetchData(); // Re-fetch data
+      try {
+        const { error } = await supabase
+          .from('products')
+          .delete()
+          .eq('id', productId);
+          
+        if (error) throw error;
+
+        fetchData(); // Re-fetch data
+      } catch (error) {
+        console.error('Erro ao deletar produto:', error);
+        alert(error.message || 'Falha ao remover produto.');
+      }
     }
   };
 
@@ -197,6 +234,8 @@ const Menu = () => {
       
       <div className="menu-container">
         {/* Categories */}
+        {/* ... (Todo o restante do JSX permanece o mesmo) */}
+        
         <div className="categories-section">
           {categories.map((category) => (
             <div key={category.id} className="category-btn-wrapper">
