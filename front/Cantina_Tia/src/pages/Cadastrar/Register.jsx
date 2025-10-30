@@ -5,7 +5,7 @@ import bloob1 from '../../assets/Vector(tia1).svg'
 import bloob2 from '../../assets/Vector(tia2).svg'
 import './Register.css'
 
-import { supabase } from './supabaseclient'; // Assumindo que supabaseclient.js está no mesmo nível
+import { supabase } from '../../../lib/supabaseclient'; // Assumindo que supabaseclient.js está no mesmo nível
 
 const Register = () => {
   async function cadastrarUsuario(event) { // Torna a função assíncrona

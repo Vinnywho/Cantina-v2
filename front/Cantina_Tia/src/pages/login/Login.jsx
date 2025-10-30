@@ -4,7 +4,7 @@ import logo from '../../assets/Logo.svg'
 import bloob1 from '../../assets/Vector(tia1).svg'
 import bloob2 from '../../assets/Vector(tia2).svg'
 import './Login.css';
-import { supabase } from './supabaseclient'; // Ajuste o caminho conforme necessário
+import { supabase } from '../../../lib/supabaseclient'; // Ajuste o caminho conforme necessário
 // ... outros imports
 
 const Login = () => {
