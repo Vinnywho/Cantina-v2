@@ -5,8 +5,10 @@ import bloob1 from '../../assets/Vector(tia1).svg'
 import bloob2 from '../../assets/Vector(tia2).svg'
 import './Register.css'
 
+import { supabase } from './supabaseclient'; // Assumindo que supabaseclient.js está no mesmo nível
+
 const Register = () => {
-  function cadastrarUsuario(event) {
+  async function cadastrarUsuario(event) { // Torna a função assíncrona
     event.preventDefault();
 
     const name = document.getElementById('name').value;
@@ -21,26 +23,58 @@ const Register = () => {
         alert('As senhas não coincidem!');
         return;
     }
+    
+    try {
+        // 1. REGISTRA O USUÁRIO NO SISTEMA DE AUTENTICAÇÃO DO SUPABASE (auth.users)
+        const { data: authData, error: authError } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                // Adiciona o nome para ser usado no email de confirmação ou metadados
+                data: { name: name }
+            }
+        });
 
-    fetch('http://localhost:3000/api/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, birthdate, cpf, password })
-    })
-    .then(response => {
-        if (!response.ok) {
-            return response.json().then(err => { throw err; });
+        if (authError) {
+            // Trata erros de autenticação (ex: email já existe)
+            throw new Error(authError.message);
         }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Sucesso:', data);
-        alert(data.message || 'Cadastro realizado com sucesso!');
-    })
-    .catch(error => {
-        console.error('Erro detalhado:', error);
-        alert(error.error || 'Erro no cadastro!');
-    });
+
+        // Se o registro de AUTH for bem-sucedido:
+        
+        // 2. INSERE OS DADOS ADICIONAIS NA SUA TABELA 'users'
+        // NOTA: É importante que o 'id' na sua tabela 'users' seja preenchido com o 'id' do usuário do Supabase
+        
+        // Este é o ID único do usuário criado pelo Supabase
+        const userId = authData.user.id; 
+
+        const { error: dbError } = await supabase
+            .from('users') // Nome da sua tabela
+            .insert([
+                { 
+                    id: userId, // Usamos o ID do Auth para manter a relação 1:1
+                    name: name, 
+                    email: email, 
+                    phone: phone, 
+                    birthdate: birthdate, 
+                    cpf: cpf, 
+                    password: password // NOTA: Em um cenário real, você não deve armazenar a senha aqui
+                }
+            ]);
+
+        if (dbError) {
+            // Se houver erro no DB, logamos e alertamos
+            console.error('Erro ao inserir dados adicionais:', dbError);
+            throw new Error('Cadastro de usuário realizado, mas houve erro ao salvar os dados adicionais.');
+        }
+
+        console.log('Sucesso:', authData);
+        alert('Cadastro realizado com sucesso! Verifique seu e-mail para confirmar a conta.');
+        
+    } catch (error) {
+        console.error('Erro detalhado:', error.message);
+        alert(error.message || 'Erro no cadastro!');
+    }
 }
   return (
     <div className="page-container">
