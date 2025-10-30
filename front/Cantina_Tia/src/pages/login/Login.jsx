@@ -4,6 +4,8 @@ import logo from '../../assets/Logo.svg'
 import bloob1 from '../../assets/Vector(tia1).svg'
 import bloob2 from '../../assets/Vector(tia2).svg'
 import './Login.css';
+import { supabase } from './supabaseclient'; // Ajuste o caminho conforme necessário
+// ... outros imports
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -22,27 +24,34 @@ const Login = () => {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: email.trim(), password })
+        // 1. CHAMA O MÉTODO DE LOGIN DO SUPABASE
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email.trim(),
+            password: password,
         });
 
-        const data = await response.json();
-
-        if (!response.ok) {
-            // Usa a mensagem de erro do backend ou uma padrão
-            throw new Error(data.error || 'Falha no login. Verifique suas credenciais.');
+        if (error) {
+            // Trata erros do Supabase (ex: credenciais inválidas)
+            throw new Error('Falha no login. Verifique seu e-mail e senha.');
         }
 
-        // Login bem-sucedido
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
+        // 2. LOGIN BEM-SUCEDIDO
+        
+        // O Supabase gerencia a sessão (token) automaticamente no localStorage.
+        // Você pode acessar os dados do usuário através de 'data.user'.
+        
+        // Salvando informações adicionais, se necessário (o token é gerenciado internamente pelo Supabase)
+        localStorage.setItem('user', JSON.stringify(data.user)); 
+        
+        // Limpando o erro e redirecionando
+        setError('');
+        console.log('Login bem-sucedido. Usuário:', data.user);
         navigate('/dashboard'); // Redireciona para o Dashboard
 
-    } catch (error) {
-        console.error('Erro no login:', error);
-        setError(error.message);
+    } catch (err) {
+        console.error('Erro no login:', err);
+        // Exibe a mensagem de erro para o usuário
+        setError(err.message); 
     }
 }
 
@@ -67,7 +76,13 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required />
               <label htmlFor="password">Senha:</label>
-              <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+              <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)} 
+                required />
               <button type="submit" id="login-button">Entrar</button>
           </form>
           <p>Não tem uma conta? <Link to="/cadastrar">Registrar</Link></p>
