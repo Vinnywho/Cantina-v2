@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap');
 
+/* --- Estilos base (Mobile-First é uma boa prática, mas aqui ajustamos o seu Desktop) --- */
+
 h1{
     font-family: "Bagel Fat One", cursive;
     font-size: 48px;
@@ -21,7 +23,7 @@ h1{
     align-items: center;
     justify-content: center;
     flex-grow: 1;
-    padding: 100px 20px; /* Ajustado para padding geral */
+    padding: 100px 20px;
     gap: 20px;
     text-align: center;
     z-index: 1;
@@ -36,9 +38,11 @@ h1{
 
 #container-register form {
     display: grid;
+    /* Layout original de duas colunas (para telas maiores) */
     grid-template-columns: 1fr 1fr;
     gap: 20px 30px;
-    width: 700px;
+    width: 700px; /* Largura fixa, ajustaremos no mobile */
+    max-width: 90%; /* Adicionado para evitar quebras em telas ligeiramente menores que 700px */
 }
 
 #container-register form label {
@@ -158,4 +162,77 @@ footer {
     color: #ffffff;
     box-sizing: border-box;
     margin-top: auto;
+}
+
+/* ------------------------------------------------------------------ */
+/* --- Media Queries para Responsividade --- */
+/* ------------------------------------------------------------------ */
+
+/* Breakpoint para Telas Médias (Tablets em modo retrato e telas menores que 768px) */
+@media (max-width: 768px) {
+    /* Ajusta a largura do formulário para caber na tela */
+    #container-register form {
+        width: 100%;
+        max-width: 450px; /* Limita a largura máxima para tablets */
+        gap: 15px 20px;
+    }
+    
+    /* Reduz o tamanho da fonte do título principal */
+    h1, #container-register h1 {
+        font-size: 38px;
+    }
+
+    /* Reduz o padding do contêiner principal */
+    #container-register {
+        padding: 80px 15px;
+    }
+
+    /* Reduz o tamanho da fonte dos labels no formulário */
+    #container-register form label {
+        font-size: 24px;
+    }
+}
+
+/* Breakpoint para Telas Pequenas (Smartphones) */
+@media (max-width: 576px) {
+    /* O formulário passa a ser de 1 coluna para melhor visualização */
+    #container-register form {
+        grid-template-columns: 1fr;
+        gap: 15px; /* Reduz o gap */
+        max-width: 90%; /* Ocupa 90% da largura do viewport */
+    }
+
+    /* Cada item (label e input) ocupa agora toda a largura da coluna (1) */
+    #container-register form label,
+    #container-register form input {
+        grid-column: span 1;
+    }
+
+    /* O botão de registro também passa a ocupar 1 coluna (total) */
+    #register-button {
+        grid-column: span 1;
+        font-size: 18px;
+        height: 50px;
+    }
+    
+    /* Reduz ainda mais o tamanho da fonte do título principal */
+    h1, #container-register h1 {
+        font-size: 32px;
+    }
+
+    /* Reduz o tamanho da fonte dos labels */
+    #container-register form label {
+        font-size: 20px;
+    }
+
+    /* Reduz o tamanho da fonte dos inputs */
+    #container-register input {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    /* Garante que os "blobs" de fundo não sejam muito grandes */
+    #bloob1, #bloob2 {
+        max-width: 60vw;
+    }
 }
