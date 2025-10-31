@@ -249,8 +249,16 @@
 .product-name {
   font-size: 16px;
   font-weight: 600;
-  color: #FFF;
+  color: var(--color-text);
   margin-bottom: 12px;
+}
+
+.product-quantity {
+  display: block;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-bottom: 12px;
+  font-weight: 500;
 }
 
 .product-footer {

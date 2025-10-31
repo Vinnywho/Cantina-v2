@@ -20,6 +20,7 @@ const Menu = () => {
   const [productPrice, setProductPrice] = useState('');
   const [productCategory, setProductCategory] = useState('');
   const [productEmoji, setProductEmoji] = useState('');
+  const [productQuantity, setProductQuantity] = useState('');
 
   // Estados para o formulário de categoria
   const [categoryName, setCategoryName] = useState('');
@@ -69,12 +70,14 @@ const Menu = () => {
       setProductPrice(editingProduct.price);
       setProductCategory(editingProduct.category_id);
       setProductEmoji(editingProduct.image);
+      setProductQuantity(editingProduct.quantity);
     } else {
       // Limpa o formulário para adicionar novo produto
       setProductName('');
       setProductPrice('');
       setProductCategory('');
       setProductEmoji('');
+      setProductQuantity('');
     }
   }, [editingProduct, isModalOpen]);
 
@@ -128,6 +131,7 @@ const Menu = () => {
       price: parseFloat(productPrice),
       category_id: parseInt(productCategory),
       image: productEmoji, // Correspondente à coluna 'image'
+      quantity: parseInt(productQuantity),
     };
     
     try {
@@ -295,6 +299,7 @@ const Menu = () => {
                 </div>
                 <div className="product-info">
                   <h3 className="product-name">{product.name}</h3>
+                  <span className="product-quantity">Em estoque: {product.quantity}</span>
                   <div className="product-footer">
                     <span className="product-price">R$ {Number(product.price).toFixed(2)}</span>
                     <div className="product-actions">
@@ -340,6 +345,17 @@ const Menu = () => {
               value={productPrice}
               onChange={(e) => setProductPrice(e.target.value)}
               required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="product-quantity">Quantidade</label>
+            <input
+              type="number"
+              id="product-quantity"
+              value={productQuantity}
+              onChange={(e) => setProductQuantity(e.target.value)}
+              required
+              min="0"
             />
           </div>
           <div className="form-group">
