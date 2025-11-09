@@ -3,18 +3,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import './Dashboardcss.css';
 import Navbar from '../../components/Navbar/Navbar';
 
-// --- Configurações Supabase (Substitua com suas chaves reais) ---
-const SUPABASE_URL = "https://tganxelcsfitizoffvyn.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnYW54ZWxjc2ZpdGl6b2ZmdnluIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NTgzMTMsImV4cCI6MjA3NzQzNDMxM30.ObZQ__nbVlej-lPE7L0a6mtGj323gI1bRq4DD4SkTeM";
-const PEDIDOS_API_URL = `${SUPABASE_URL}/rest/v1/pedidos`;
+// 1. IMPORTAÇÃO DA INSTÂNCIA CONFIGURADA DO SUPABASE
+// Assume-se que o caminho de importação está correto (baseado em estruturas padrão)
+import { supabase } from '../../../lib/supabaseclient';
 
-// Cabeçalhos para todas as requisições ao Supabase
-const API_HEADERS = {
-  'apikey': SUPABASE_ANON_KEY,
-  'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-  'Content-Type': 'application/json',
-  'Content-Profile': 'public', 
-};
 // -----------------------------------------------------------------
 
 // Função auxiliar para obter a classe CSS do status
@@ -43,20 +35,22 @@ const OrderItem = ({ order, onUpdateStatus }) => {
     <span key={index}>— {item.produto_id.nome} ({item.produto_id.emoji}) x{item.quantidade}</span>
   ));
   
-  // Botões de Ação visíveis apenas para pedidos não finalizados/cancelados
+  // Botões de Ação visíveis apenas para pedidos ativos
   const renderActions = () => (
     <div className="order-actions">
       <button 
         className="btn-pronto" 
-        onClick={() => onUpdateStatus(order.id, 'PRONTO')} 
-        disabled={order.status_pedido === 'PRONTO'}
+        // Aqui, o status 'PRONTO' ou 'FINALIZADO' pode ser usado dependendo do seu fluxo de trabalho
+        // Usaremos 'FINALIZADO' como a ação final para remover da fila
+        onClick={() => onUpdateStatus(order.id, 'FINALIZADO')}
+        disabled={order.status_pedido === 'FINALIZADO' || order.status_pedido === 'CANCELADO'}
       >
-        Pronto
+        Finalizar
       </button>
       <button 
         className="btn-cancelar" 
         onClick={() => onUpdateStatus(order.id, 'CANCELADO')}
-        disabled={order.status_pedido === 'CANCELADO'}
+        disabled={order.status_pedido === 'CANCELADO' || order.status_pedido === 'FINALIZADO'}
       >
         Cancelar
       </button>
@@ -77,7 +71,10 @@ const OrderItem = ({ order, onUpdateStatus }) => {
       {/* Linha dos itens do pedido (Sub-linha) */}
       <li className="order sub">
         <div className="order-items">
-          {isHistory ? <span>— {itemDisplay[0]}... ({order.pedidos_produtos.length} itens)</span> : itemDisplay}
+          {isHistory 
+            ? <span>— {itemDisplay[0]}... ({order.pedidos_produtos.length} itens)</span> 
+            : itemDisplay
+          }
         </div>
       </li>
     </>
@@ -90,50 +87,44 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // URL para buscar pedidos com dados aninhados (JOINs) e ordenação por data
-  const FETCH_URL = `${PEDIDOS_API_URL}?select=id,status_pedido,data_pedido,user_app_id(name),pedidos_produtos(quantidade,produto_id(nome,emoji))&order=data_pedido.asc`;
-
-  // Função para buscar pedidos do Supabase usando FETCH
+  // 2. FUNÇÃO DE BUSCA DE PEDIDOS (Usando Supabase Client)
   const fetchOrders = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(FETCH_URL, { 
-        method: 'GET',
-        headers: API_HEADERS 
-      });
+      const { data, error: fetchError } = await supabase
+        .from('pedidos')
+        .select(`
+          id,
+          status_pedido,
+          data_pedido,
+          user_app_id(name),
+          pedidos_produtos(quantidade, produto_id(nome, emoji))
+        `)
+        // Ordena do mais recente para o mais antigo (para a fila)
+        .order('data_pedido', { ascending: false }); 
 
-      if (!response.ok) {
-        throw new Error(`Erro HTTP: ${response.status}`);
-      }
-
-      const data = await response.json();
+      if (fetchError) throw fetchError;
+      
       setOrders(data);
     } catch (err) {
-      console.error("Erro ao buscar pedidos:", err);
-      setError("Não foi possível carregar os pedidos.");
+      console.error("Erro ao buscar pedidos:", err.message);
+      setError("Não foi possível carregar os pedidos. Verifique RLS e conexão.");
     } finally {
       setLoading(false);
     }
-  }, [FETCH_URL]);
+  }, []);
 
-  // Função para atualizar o status do pedido via PATCH usando FETCH
+  // 3. FUNÇÃO DE ATUALIZAÇÃO DE STATUS (Usando Supabase Client)
   const handleUpdateStatus = async (orderId, newStatus) => {
     try {
-      const response = await fetch(
-        `${PEDIDOS_API_URL}?id=eq.${orderId}`, 
-        {
-          method: 'PATCH',
-          headers: API_HEADERS,
-          body: JSON.stringify({ status_pedido: newStatus }),
-        }
-      );
-
-      if (response.status !== 204) { // 204 No Content é o retorno padrão do Supabase PATCH
-        // Tenta ler o corpo da resposta se o status não for 204 para obter detalhes do erro
-        const errorBody = await response.text();
-        throw new Error(`Erro ao atualizar status. Status: ${response.status}. Detalhe: ${errorBody.substring(0, 100)}...`);
-      }
+      // Faz o PATCH (UPDATE) no Supabase
+      const { error: updateError } = await supabase
+        .from('pedidos')
+        .update({ status_pedido: newStatus })
+        .eq('id', orderId); // Filtra pelo ID do pedido
+        
+      if (updateError) throw updateError;
 
       // Atualiza o estado local para refletir a mudança instantaneamente
       setOrders(prevOrders => 
@@ -144,19 +135,21 @@ export default function Dashboard() {
 
       alert(`Pedido #${orderId.toString().padStart(3, '0')} atualizado para ${newStatus}.`);
     } catch (err) {
-      console.error("Erro ao atualizar status:", err);
-      alert(err.message || "Falha na comunicação com o servidor.");
+      console.error("Erro ao atualizar status:", err.message);
+      alert(`Falha ao atualizar status. Detalhe: ${err.message}`);
     }
   };
 
   // Efeito para carregar dados na montagem
   useEffect(() => {
     fetchOrders();
+    // Recarrega a cada 30 segundos
     const interval = setInterval(fetchOrders, 30000); 
     return () => clearInterval(interval);
   }, [fetchOrders]);
 
   // Filtragem e Classificação dos pedidos
+  // Filtra os pedidos ativos (fila) e os finalizados/cancelados (histórico)
   const activeOrders = orders.filter(o => o.status_pedido !== 'FINALIZADO' && o.status_pedido !== 'CANCELADO');
   const historyOrders = orders.filter(o => o.status_pedido === 'FINALIZADO' || o.status_pedido === 'CANCELADO');
 
