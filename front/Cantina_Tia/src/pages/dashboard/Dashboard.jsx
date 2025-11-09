@@ -30,23 +30,25 @@ const OrderItem = ({ order, onUpdateStatus }) => {
   ));
   
   const renderActions = () => (
-    <div className="order-actions">
-      <button 
-        className="btn-pronto" 
-        onClick={() => onUpdateStatus(order.id, 'PRONTO')}
-        disabled={order.status_pedido === 'PRONTO' || order.status_pedido === 'FINALIZADO' || order.status_pedido === 'CANCELADO'}
-      >
-        Pronto
-      </button>
-      <button 
-        className="btn-cancelar" 
-        onClick={() => onUpdateStatus(order.id, 'CANCELADO')}
-        disabled={order.status_pedido === 'CANCELADO' || order.status_pedido === 'FINALIZADO'}
-      >
-        Cancelar
-      </button>
-    </div>
-  );
+  <div className="order-actions">
+    <button 
+      className="btn-pronto" 
+      onClick={() => onUpdateStatus(order.id, 'FINALIZADO')}
+      // O botão Finalizar deve estar desabilitado se já estiver FINALIZADO ou CANCELADO.
+      // Se estiver em EM PREPARO ou PRONTO, deve estar ativo.
+      disabled={order.status_pedido === 'FINALIZADO' || order.status_pedido === 'CANCELADO'}
+    >
+      Finalizar
+    </button>
+    <button 
+      className="btn-cancelar" 
+      onClick={() => onUpdateStatus(order.id, 'CANCELADO')}
+      disabled={order.status_pedido === 'CANCELADO' || order.status_pedido === 'FINALIZADO'}
+    >
+      Cancelar
+    </button>
+  </div>
+);
 
   return (
     <>

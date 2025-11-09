@@ -96,6 +96,56 @@ body{
   border-radius:1px
 }
 
+.order-actions {
+  grid-column: 3 / -1; 
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-right: 2px;
+}
+
+.order-actions button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+  font-size: 14px;
+}
+
+.order-actions .btn-pronto {
+  background: var(--verde);
+  color: white;
+}
+.order-actions .btn-pronto:hover:not(:disabled) {
+  background: #209949; 
+}
+
+.order-actions .btn-cancelar {
+  background: var(--vermelho);
+  color: white;
+}
+.order-actions .btn-cancelar:hover:not(:disabled) {
+  background: #b80707;
+}
+
+.order-actions button:disabled {
+  background: var(--pill);
+  color: var(--muted);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.order:not(.sub) {
+  grid-template-columns: auto 56px 1fr auto; 
+}
+
+.order-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 @media (max-width:900px){
   #nav-menu{
     position:fixed;
