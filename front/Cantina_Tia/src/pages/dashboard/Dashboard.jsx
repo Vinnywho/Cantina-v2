@@ -32,7 +32,7 @@ const OrderItem = ({ order, onUpdateStatus }) => {
   
   // Mapeia e exibe os itens do pedido
   const itemDisplay = order.pedidos_produtos.map((item, index) => (
-    <span key={index}>— {item.produto_id.nome} ({item.produto_id.emoji}) x{item.quantidade}</span>
+    <span key={index}>— {item.produto_id.name} ({item.produto_id.image}) x{item.quantidade}</span>
   ));
   
   // Botões de Ação visíveis apenas para pedidos ativos
