@@ -92,12 +92,16 @@ export default function Dashboard() {
     setLoading(true);
     setError(null);
     try {
-      const { data, error: fetchError } = await supabase
-        .from('pedidos')
-        // ATUAL (Provavelmente falhando aqui)
-        .select(`id,status_pedido,data_pedido,user_app_id(name),pedidos_produtos(quantidade,produto_id(nome,emoji))`)
-        // Ordena do mais recente para o mais antigo (para a fila)
-        .order('data_pedido', { ascending: false }); 
+     const { data, error: fetchError } = await supabase
+      .from('pedidos')
+      .select(`
+        id,
+        status_pedido,
+        data_pedido,
+        user_app_id(name),
+        pedidos_produtos(quantidade, produto_id(name, image)) // Corrigido 'nome' para 'name' e 'emoji' para 'image'
+      `)
+      .order('data_pedido', { ascending: false });
 
       if (fetchError) throw fetchError;
       
