@@ -3,13 +3,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import './Dashboardcss.css';
 import Navbar from '../../components/Navbar/Navbar';
 
-// 1. IMPORTAÇÃO DA INSTÂNCIA CONFIGURADA DO SUPABASE
-// Assume-se que o caminho de importação está correto (baseado em estruturas padrão)
 import { supabase } from '../../../lib/supabaseclient';
 
-// -----------------------------------------------------------------
-
-// Função auxiliar para obter a classe CSS do status
 const getStatusClass = (status) => {
   switch (status) {
     case 'PRONTO':
@@ -26,26 +21,22 @@ const getStatusClass = (status) => {
   }
 };
 
-// Componente para renderizar um item de pedido
 const OrderItem = ({ order, onUpdateStatus }) => {
   const isHistory = order.status_pedido === 'FINALIZADO' || order.status_pedido === 'CANCELADO';
   
-  // Mapeia e exibe os itens do pedido
+  // CORREÇÃO: Usando 'name' e 'image' conforme a string de select da API
   const itemDisplay = order.pedidos_produtos.map((item, index) => (
     <span key={index}>— {item.produto_id.name} ({item.produto_id.image}) x{item.quantidade}</span>
   ));
   
-  // Botões de Ação visíveis apenas para pedidos ativos
   const renderActions = () => (
     <div className="order-actions">
       <button 
         className="btn-pronto" 
-        // Aqui, o status 'PRONTO' ou 'FINALIZADO' pode ser usado dependendo do seu fluxo de trabalho
-        // Usaremos 'FINALIZADO' como a ação final para remover da fila
-        onClick={() => onUpdateStatus(order.id, 'FINALIZADO')}
-        disabled={order.status_pedido === 'FINALIZADO' || order.status_pedido === 'CANCELADO'}
+        onClick={() => onUpdateStatus(order.id, 'PRONTO')}
+        disabled={order.status_pedido === 'PRONTO' || order.status_pedido === 'FINALIZADO' || order.status_pedido === 'CANCELADO'}
       >
-        Finalizar
+        Pronto
       </button>
       <button 
         className="btn-cancelar" 
@@ -59,7 +50,6 @@ const OrderItem = ({ order, onUpdateStatus }) => {
 
   return (
     <>
-      {/* Linha principal do pedido */}
       <li className={`order ${isHistory ? 'orders--history' : ''}`}>
         <i className={`ponto ${getStatusClass(order.status_pedido)}`} />
         <span className="order-code">{order.id.toString().padStart(3, '0')}</span>
@@ -68,7 +58,6 @@ const OrderItem = ({ order, onUpdateStatus }) => {
         {!isHistory ? renderActions() : <span className="order-status-history">{order.status_pedido}</span>}
       </li>
       
-      {/* Linha dos itens do pedido (Sub-linha) */}
       <li className="order sub">
         <div className="order-items">
           {isHistory 
@@ -87,7 +76,6 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // 2. FUNÇÃO DE BUSCA DE PEDIDOS (Usando Supabase Client)
   const fetchOrders = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -99,7 +87,7 @@ export default function Dashboard() {
         status_pedido,
         data_pedido,
         user_app_id(name),
-        pedidos_produtos(quantidade, produto_id(name, image)) // Corrigido 'nome' para 'name' e 'emoji' para 'image'
+        pedidos_produtos(quantidade, produto_id(name, image))
       `)
       .order('data_pedido', { ascending: false });
 
@@ -114,18 +102,15 @@ export default function Dashboard() {
     }
   }, []);
 
-  // 3. FUNÇÃO DE ATUALIZAÇÃO DE STATUS (Usando Supabase Client)
   const handleUpdateStatus = async (orderId, newStatus) => {
     try {
-      // Faz o PATCH (UPDATE) no Supabase
       const { error: updateError } = await supabase
         .from('pedidos')
         .update({ status_pedido: newStatus })
-        .eq('id', orderId); // Filtra pelo ID do pedido
+        .eq('id', orderId);
         
       if (updateError) throw updateError;
 
-      // Atualiza o estado local para refletir a mudança instantaneamente
       setOrders(prevOrders => 
         prevOrders.map(order => 
           order.id === orderId ? { ...order, status_pedido: newStatus } : order
@@ -139,20 +124,15 @@ export default function Dashboard() {
     }
   };
 
-  // Efeito para carregar dados na montagem
   useEffect(() => {
     fetchOrders();
-    // Recarrega a cada 30 segundos
     const interval = setInterval(fetchOrders, 30000); 
     return () => clearInterval(interval);
   }, [fetchOrders]);
 
-  // Filtragem e Classificação dos pedidos
-  // Filtra os pedidos ativos (fila) e os finalizados/cancelados (histórico)
   const activeOrders = orders.filter(o => o.status_pedido !== 'FINALIZADO' && o.status_pedido !== 'CANCELADO');
   const historyOrders = orders.filter(o => o.status_pedido === 'FINALIZADO' || o.status_pedido === 'CANCELADO');
 
-  // KPIS
   const currentOrderCode = activeOrders.length > 0 ? activeOrders[0].id.toString().padStart(3, '0') : 'N/A';
   const lastCompletedOrder = historyOrders.find(o => o.status_pedido === 'FINALIZADO');
   const lastCompletedOrderCode = lastCompletedOrder ? lastCompletedOrder.id.toString().padStart(3, '0') : 'N/A';
@@ -175,7 +155,6 @@ export default function Dashboard() {
         </div>
 
         <div className="grid">
-          {/* FILA */}
           <div className="card fila">
             <h2 className="titulo">FILA ({activeOrders.length})</h2>
             <div className="divider" />
