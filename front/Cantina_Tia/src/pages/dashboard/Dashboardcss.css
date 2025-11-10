@@ -29,7 +29,6 @@ body{
 }
 .page{
   min-height:100dvh;
-  padding-top: 120px; /* Adiciona espaço no topo para a navbar fixa */
 }
 
 #navbar{
