@@ -35,41 +35,6 @@ body {
   font-family: Poppins, system-ui, -apple-system, Segoe UI, Roboto, Arial;
 }
 
-/* ----------------------------------
- * 1. NAVBAR (Adicionando Z-INDEX ALTO) 
- * ---------------------------------- */
-#navbar {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 100%; 
-    height: 60px;
-}
-#container-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: min(1200px, 92%);
-    margin-inline: auto;
-    padding: 0;
-    height: 100%;
-}
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-.nav-actions .icon {
-  font-size: 1.2em;
-  color: var(--muted);
-  cursor: pointer;
-}
-.user-avatar {
-  font-size: 1.5em; 
-}
-
 
 /* ----------------------------------
  * 2. LAYOUT GERAL (Sidebar + Conteúdo)
