@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { supabase } from './supabaseClient'; 
 import './ContasAReceber.css';
-import { supabase } from '../../../lib/supabaseclient';
 
-// [ ... Importações de ícones aqui ... ]
 import { FaBell, FaClock, FaUserCircle, FaTachometerAlt, FaDollarSign, FaChartBar, FaCalendarAlt, FaEdit, FaTrashAlt } from 'react-icons/fa';
 import { IoIosArrowDown, IoMdCheckboxOutline } from 'react-icons/io';
 
@@ -12,7 +11,6 @@ const ContasAReceber = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Função Assíncrona para buscar os dados
   const fetchContas = async () => {
     setLoading(true);
     setError(null);
@@ -28,16 +26,39 @@ const ContasAReceber = () => {
       
       setContas(data || []);
     } catch (err) {
-      console.error('Erro ao buscar contas:', err.message);
       setError('Falha ao carregar dados. Tente novamente.');
-      setContas([]);
     } finally {
       setLoading(false);
     }
   };
+
+  const deleteConta = async (id) => {
+    if (!window.confirm('Tem certeza que deseja deletar esta conta?')) {
+      return;
+    }
+    setLoading(true);
+    try {
+      const { error } = await supabase
+        .from('contas_a_pagar')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        throw error;
+      }
+
+      setContas(contas.filter(conta => conta.id !== id));
+      
+    } catch (err) {
+      alert('Não foi possível deletar a conta.');
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   useEffect(() => {
     fetchContas();
-  }, []);
+  }, []); 
 
   const totalReceber = contas.reduce((sum, conta) => sum + (conta.valor || 0), 0);
   const totalFormatado = new Intl.NumberFormat('pt-BR', {
@@ -56,20 +77,47 @@ const ContasAReceber = () => {
   return (
     <div className="app-container">
 
-      
-      <header className="top-header"> {/* ... */}</header>
+      <header className="top-header">
+        <div className="header-title">Contas a Pagar</div>
+        <div className="header-icons">
+          <FaBell className="icon" />
+          <FaClock className="icon" />
+          <FaUserCircle className="icon user-avatar" />
+        </div>
+      </header>
+
       <div className="main-content-area">
-        <aside className="sidebar"> {/* ... */} </aside>
+        
+        <aside className="sidebar">
+          <div className="logo"></div>
+          <nav className="menu-nav">
+            <div className="menu-item"> <FaTachometerAlt /> Visão Geral/Dashboard </div>
+            <div className="menu-item active"> <FaDollarSign /> Contas a Receber </div>
+            <div className="menu-item"> <FaDollarSign /> Contas a Receber </div>
+            <div className="menu-item"> <FaChartBar /> Fluxo de Caixa </div>
+            <div className="menu-item"> <IoMdCheckboxOutline /> Lançamentos </div>
+            <div className="menu-item"> <FaChartBar /> Relatórios </div>
+            <div className="menu-item"> <FaChartBar /> Relatórios </div>
+            <div className="menu-item"> <FaCalendarAlt /> Conciliação Bancária </div>
+          </nav>
+        </aside>
 
         <main className="content-body">
           <h2 className="content-title">Contas a Receber</h2>
           
-          <div className="filter-bar"> {/* ... */} </div>
+          <div className="filter-bar">
+            <div className="dropdown-container"> Contas (Caixa e Bancos) <IoIosArrowDown /> </div>
+            <div className="filter-options">
+              <div className="filter-group"> <label>Período:</label> <div className="dropdown-container">Forncedor <IoIosArrowDown /></div> </div>
+              <div className="filter-group"> <label>Status:</label> <div className="dropdown-container"> Aplice: A Vencer <FaCalendarAlt /> </div> </div>
+              <button className="btn-primary">Aplicar Filtros</button>
+              <button className="btn-secondary">Nova Conta</button>
+            </div>
+          </div>
           
           <div className="total-card">
             Total a Receber: **{totalFormatado}**
           </div>
-
 
           <div className="table-container">
             <table>
@@ -101,7 +149,10 @@ const ContasAReceber = () => {
                         <div className="action-icons">
                            <input type="checkbox" />
                           <FaEdit className="action-icon" />
-                          <FaTrashAlt className="action-icon" />
+                          <FaTrashAlt 
+                            className="action-icon delete-icon"
+                            onClick={() => deleteConta(conta.id)} 
+                          />
                         </div>
                     </td>
                   </tr>

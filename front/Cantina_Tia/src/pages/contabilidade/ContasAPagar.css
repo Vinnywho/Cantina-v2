@@ -1,16 +1,14 @@
-/* Variáveis para cores */
 :root {
-  --primary-color: #38761d; /* Verde escuro */
-  --secondary-color: #e6e6e6; /* Cinza claro de fundo */
-  --sidebar-active-bg: #4c8c4a; /* Verde mais claro para item ativo */
+  --primary-color: #38761d;
+  --secondary-color: #e6e6e6;
+  --sidebar-active-bg: #4c8c4a;
   --text-color: #333;
-  --status-vencer: #d9ead3; /* Verde claríssimo */
-  --status-atraso: #f4cccc; /* Vermelho claríssimo */
-  --status-text-vencer: #274e13; /* Verde escuro para texto */
-  --status-text-atraso: #a61c00; /* Vermelho escuro para texto */
+  --status-vencer: #d9ead3;
+  --status-atraso: #f4cccc;
+  --status-text-vencer: #274e13;
+  --status-text-atraso: #a61c00;
 }
 
-/* 1. Layout Geral */
 .app-container {
   display: grid;
   grid-template-rows: 60px 1fr;
@@ -19,7 +17,6 @@
   background-color: var(--secondary-color);
 }
 
-/* Header Superior */
 .top-header {
   grid-row: 1;
   display: flex;
@@ -44,17 +41,15 @@
 }
 
 .user-avatar {
-  font-size: 1.5em; /* Aumenta o tamanho do avatar */
+  font-size: 1.5em; 
 }
 
-/* 2. Área Principal (Sidebar + Conteúdo) */
 .main-content-area {
   grid-row: 2;
   display: grid;
-  grid-template-columns: 250px 1fr; /* Largura da sidebar */
+  grid-template-columns: 250px 1fr; 
 }
 
-/* Sidebar */
 .sidebar {
   background-color: #fff;
   padding: 20px 0;
@@ -65,7 +60,6 @@
   text-align: center;
   margin-bottom: 20px;
   padding: 0 20px;
-  /* Simulação de logo */
   font-size: 1.5em;
   font-weight: bold;
   color: var(--primary-color);
@@ -92,13 +86,12 @@
 .menu-item.active {
   background-color: var(--sidebar-active-bg);
   color: white;
-  border-left: 5px solid var(--primary-color); /* Linha de destaque */
+  border-left: 5px solid var(--primary-color);
 }
 
-/* 3. Conteúdo Principal */
 .content-body {
   padding: 20px;
-  overflow-y: auto; /* Para rolagem se o conteúdo for grande */
+  overflow-y: auto;
 }
 
 .content-title {
@@ -107,7 +100,6 @@
   margin-bottom: 20px;
 }
 
-/* Barra de Filtros */
 .filter-bar {
   display: flex;
   justify-content: space-between;
@@ -162,14 +154,13 @@
   font-weight: bold;
 }
 
-/* Cartão de Resumo */
 .total-card {
   background-color: var(--primary-color);
   color: white;
   padding: 15px;
-  border-radius: 8px 8px 0 0; /* Apenas na parte superior */
+  border-radius: 8px 8px 0 0;
   font-weight: normal;
-  margin-bottom: -1px; /* Para 'grudar' na tabela */
+  margin-bottom: -1px;
 }
 
 .total-card strong {
@@ -177,7 +168,6 @@
   font-size: 1.1em;
 }
 
-/* Tabela */
 .table-container {
   background-color: white;
   border-radius: 0 0 8px 8px;
@@ -222,12 +212,12 @@ tbody td {
   text-align: center;
 }
 
-.status-vencer {
+.status-a-vencer {
   background-color: var(--status-vencer);
   color: var(--status-text-vencer);
 }
 
-.status-atraso {
+.status-em-atraso {
   background-color: var(--status-atraso);
   color: var(--status-text-atraso);
 }
@@ -235,11 +225,21 @@ tbody td {
 .action-icons {
   display: flex;
   gap: 10px;
+  align-items: center;
 }
 
 .action-icon {
   color: #999;
   cursor: pointer;
+  transition: color 0.1s;
+}
+
+.action-icon:hover {
+  color: var(--text-color);
+}
+
+.delete-icon:hover {
+  color: #a61c00;
 }
 
 .loading-message, .error-message, .empty-state {
@@ -250,18 +250,8 @@ tbody td {
 
 .error-message {
     color: var(--status-text-atraso);
-}
-/* Exemplo de novo status (se você tiver 'PAGO' na sua DB) */
-.status-pago {
-    background-color: #d9ead3; /* Cor verde para pago */
-    color: #274e13;
-}
-/* Certifique-se que o status no CSS corresponda ao que vem da DB */
-.status-em-atraso { /* Novo nome para a classe, baseado no status da DB */
-    background-color: var(--status-atraso);
-    color: var(--status-text-atraso);
-}
-.status-a-vencer { /* Novo nome para a classe, baseado no status da DB */
-    background-color: var(--status-vencer);
-    color: var(--status-text-vencer);
+    background-color: #ffeaea;
+    border: 1px solid #a61c00;
+    margin: 20px;
+    border-radius: 4px;
 }
