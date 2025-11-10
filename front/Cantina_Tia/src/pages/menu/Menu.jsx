@@ -208,7 +208,7 @@ const Menu = () => {
       } catch (error) {
         console.error('Erro ao deletar categoria:', error);
         // Mensagem mais informativa sobre a restrição de FK
-        alert('Erro ao remover categoria. Verifique se não há produtos associados a ela.' || error.message);
+        alert(error.message);
       }
     }
   };
