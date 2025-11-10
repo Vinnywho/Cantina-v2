@@ -3,20 +3,20 @@
 
 /* Variáveis para cores (Combinando as de ContasAReceber com as do Dashboard) */
 :root {
-  --bg: #f5f5f5; /* Cor de fundo mais neutra, semelhante ao Dashboard */
+  --bg: #f5f5f5;
   --ink: #111;
   --muted: #6b7280;
   --brand: #244F33; /* Verde escuro da marca */
   --card: #fff;
-  --shadow: 0 4px 12px rgba(0,0,0,.1); /* Sombra mais suave */
-  --verde: #28AF57;
+  --shadow: 0 4px 12px rgba(0,0,0,.1);
+  --verde: #28AF57; /* Verde de Ação e Sucesso */
   --laranja: #FF8000;
   --vermelho: #CA0808;
   --azul: #0856CA;
   --pill: #92A89A40;
   
-  --primary-color: var(--brand); /* Mapeamento */
-  --sidebar-active-bg: var(--brand); /* Mapeamento */
+  --primary-color: var(--brand);
+  --sidebar-active-bg: var(--brand); 
   --text-color: var(--ink);
   --status-vencer: #d9ead3;
   --status-atraso: #f4cccc;
@@ -36,12 +36,48 @@ body {
 }
 
 /* ----------------------------------
+ * 1. NAVBAR (Adicionando Z-INDEX ALTO) 
+ * ---------------------------------- */
+#navbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%; 
+    height: 60px;
+}
+#container-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: min(1200px, 92%);
+    margin-inline: auto;
+    padding: 0;
+    height: 100%;
+}
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.nav-actions .icon {
+  font-size: 1.2em;
+  color: var(--muted);
+  cursor: pointer;
+}
+.user-avatar {
+  font-size: 1.5em; 
+}
+
+
+/* ----------------------------------
  * 2. LAYOUT GERAL (Sidebar + Conteúdo)
  * ---------------------------------- */
 .app-container {
   display: grid;
-  grid-template-rows: auto 1fr; /* Navbar no topo, resto abaixo */
-  min-height: calc(100vh - 60px); /* 60px é a altura da navbar */
+  grid-template-rows: auto 1fr; 
+  min-height: calc(100vh - 60px); 
 }
 .main-content-area {
   grid-row: 2;
@@ -56,7 +92,7 @@ body {
   padding: 20px 0;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
 }
-.logo-sidebar { /* Novo estilo para o logo interno */
+.logo-sidebar { 
   text-align: center;
   margin-bottom: 20px;
   padding: 0 20px;
@@ -79,10 +115,12 @@ body {
 .menu-item:hover:not(.active) {
   background-color: var(--secondary-color);
 }
+/* CORREÇÃO VISUAL: Destaque mais nítido com borda verde */
 .menu-item.active {
   background-color: var(--sidebar-active-bg);
   color: white;
-  border-left: 5px solid var(--verde); /* Destaque com verde primário */
+  border-left: 5px solid var(--verde); /* Destaque com o verde de ação */
+  font-weight: 600;
 }
 
 /* ----------------------------------
@@ -93,47 +131,46 @@ body {
   overflow-y: auto;
 }
 .content-title {
-  font-family: "Bagel Fat One", system-ui; /* Título com a fonte do Dashboard */
+  font-family: "Bagel Fat One", system-ui; 
   font-size: 28px;
   letter-spacing: 1px;
   color: var(--ink);
   margin-bottom: 20px;
 }
+/* CORREÇÃO VISUAL: Estilos da barra de filtros */
 .filter-bar {
   background-color: var(--card);
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   margin-bottom: 20px;
   padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.filter-group label {
+    font-weight: 500;
+}
+.dropdown-container {
+    padding: 8px 12px;
 }
 
 /* Botões */
 .btn-primary {
-  background-color: var(--verde); /* Usando o verde de ação do Dashboard */
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
+  background-color: var(--verde); 
 }
 .btn-secondary {
-  background-color: #fff;
   color: var(--brand);
-  padding: 10px 15px;
   border: 1px solid var(--brand);
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
 }
 
-/* Cartão Total */
+/* CORREÇÃO VISUAL: Cartão Total com cor de sucesso e mais clean */
 .total-card {
-  background-color: var(--brand);
+  background-color: var(--verde); /* Verde de Sucesso */
   color: white;
   padding: 15px;
   border-radius: 8px 8px 0 0;
-  font-weight: normal;
+  font-weight: bold; /* Deixar o texto mais forte */
   margin-bottom: -1px;
 }
 
@@ -142,8 +179,8 @@ body {
   background-color: var(--card);
   border-radius: 0 0 8px 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
 }
-
 /* Estilos de Status */
 .status-a-vencer {
   background-color: var(--status-vencer);
@@ -161,7 +198,7 @@ body {
 }
 
 /* ----------------------------------
- * 4. MODAL - Novo elemento 
+ * 4. MODAL - CORREÇÃO CRÍTICA DO Z-INDEX
  * ---------------------------------- */
 .modal-overlay {
   position: fixed;
@@ -169,11 +206,13 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7); /* Overlay mais escuro */
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100;
+  z-index: 1000; /* Z-INDEX MUITO ALTO PARA GARANTIR SOBREPOSIÇÃO DA NAVBAR */
+  opacity: 1; 
+  /* Adicione animação se desejar: transition: opacity 0.3s; */
 }
 
 .modal-content {
@@ -182,15 +221,9 @@ body {
   border-radius: 12px;
   width: 90%;
   max-width: 500px;
-  box-shadow: var(--shadow);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); /* Sombra mais forte */
   position: relative;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+  /* Não precisa de z-index alto aqui, o overlay já garante. */
 }
 
 .modal-header h3 {
@@ -200,34 +233,23 @@ body {
   color: var(--brand);
 }
 
-.modal-close-btn {
-  background: none;
-  border: none;
-  font-size: 1.5em;
-  cursor: pointer;
-  color: var(--muted);
-}
-
 .modal-form label {
-  display: block;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  font-weight: 500;
-  font-size: 0.9em;
-  color: var(--muted);
+  font-weight: 600; /* Destaque maior para o label */
+  color: var(--ink); /* Cor de texto padrão */
 }
 
 .modal-form input,
 .modal-form select {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1em;
+  border: 1px solid #ddd;
+  transition: border-color 0.2s;
 }
 
-.modal-form button {
-  width: 100%;
-  margin-top: 10px;
+.modal-form input:focus,
+.modal-form select:focus {
+  border-color: var(--verde);
+  outline: none;
+}
+/* Botão da modal para usar o verde de sucesso */
+.modal-form button.btn-primary {
+    background: var(--verde);
 }
