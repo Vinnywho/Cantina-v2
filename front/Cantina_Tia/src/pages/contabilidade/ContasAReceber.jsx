@@ -185,7 +185,7 @@ const ContasAReceber = () => {
       <div className="app-container">
         
         <aside className="sidebar">
-          <div className="logo-sidebar">Controle F.</div>
+          <div className="logo-sidebar">CONTROLE FINANCEIRO</div>
           <nav className="menu-nav">
             <div className="menu-item"> <FaTachometerAlt /> Visão Geral/Dashboard </div>
             <div className="menu-item active"> <FaDollarSign /> Contas a Receber </div>
