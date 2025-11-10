@@ -2,9 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from './supabaseClient'; 
 import './ContasAReceber.css';
 
-import { FaBell, FaClock, FaUserCircle, FaTachometerAlt, FaDollarSign, FaChartBar, FaCalendarAlt, FaEdit, FaTrashAlt, FaTimes } from 'react-icons/fa';
-import { IoIosArrowDown, IoMdCheckboxOutline } from 'react-icons/io';
-
 // ----------------------------------------------------
 // Componente Navbar
 // ----------------------------------------------------
