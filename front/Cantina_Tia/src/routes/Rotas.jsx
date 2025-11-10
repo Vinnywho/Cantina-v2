@@ -4,7 +4,7 @@ import Login from "../pages/login/Login";
 import Register from "../pages/Cadastrar/Register";
 import Dashboard from "../pages/dashboard/Dashboard";
 import Menu from "../pages/menu/Menu";
-import Contabilidade from "../pages/contabilidade/ContasAPagar";
+import Contabilidade from "../pages/contabilidade/ContasAReceber";
 
 function Rotas() {
     return(

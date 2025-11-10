@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from './supabaseClient'; 
+import { supabase } from '../../../lib/supabaseclient';
 import './ContasAReceber.css';
 
 import { FaBell, FaClock, FaUserCircle, FaTachometerAlt, FaDollarSign, FaChartBar, FaCalendarAlt, FaEdit, FaTrashAlt } from 'react-icons/fa';
