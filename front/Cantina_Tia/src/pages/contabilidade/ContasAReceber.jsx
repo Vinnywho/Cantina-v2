@@ -1,22 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { supabase } from '../../../lib/supabaseclient';
+import { supabase } from '../../../lib/supabaseclient'; 
 import './ContasAReceber.css';
 
-// ----------------------------------------------------
-// Componente Navbar
-// ----------------------------------------------------
-const Navbar = () => (
-  <nav id="navbar">
-    <div id="container-nav">
-      <div id="logo-nav">FINANCEIRO</div>
-      <div className="nav-actions">
-        <FaBell className="icon" />
-        <FaClock className="icon" />
-        <FaUserCircle className="icon user-avatar" />
-      </div>
-    </div>
-  </nav>
-);
+// CORREÇÃO: Usando a importação externa da Navbar
+import Navbar from '../../components/Navbar/Navbar'; 
+
+// Importações dos Ícones (necessárias para Navbar, Sidebar e Tabela)
+import { FaBell, FaClock, FaUserCircle, FaTachometerAlt, FaDollarSign, FaChartBar, FaCalendarAlt, FaEdit, FaTrashAlt, FaTimes } from 'react-icons/fa';
+import { IoIosArrowDown, IoMdCheckboxOutline } from 'react-icons/io';
+
 
 // ----------------------------------------------------
 // Componente Modal de Cadastro
@@ -24,7 +16,7 @@ const Navbar = () => (
 const ModalCadastro = ({ show, onClose, onSave }) => {
   const [formData, setFormData] = useState({
     vencimento: '',
-    fornecedor: '',
+    fornecedor: '', // Nome do campo refletindo a tabela 'contas_a_receber'
     descricao: '',
     categoria: '',
     valor: '',
@@ -100,7 +92,7 @@ const ContasAReceber = () => {
   const fetchContas = useCallback(async () => {
     setError(null);
     try {
-      // AJUSTE: MUDANÇA PARA 'contas_a_receber'
+      // Usando a tabela correta: 'contas_a_receber'
       const { data, error } = await supabase
         .from('contas_a_receber')
         .select('*')
@@ -122,7 +114,7 @@ const ContasAReceber = () => {
     setShowModal(false);
     setLoading(true);
     try {
-      // AJUSTE: MUDANÇA PARA 'contas_a_receber'
+      // Usando a tabela correta: 'contas_a_receber'
       const { data, error } = await supabase
         .from('contas_a_receber')
         .insert([newConta])
@@ -148,7 +140,7 @@ const ContasAReceber = () => {
     }
     setLoading(true);
     try {
-      // AJUSTE: MUDANÇA PARA 'contas_a_receber'
+      // Usando a tabela correta: 'contas_a_receber'
       const { error } = await supabase
         .from('contas_a_receber')
         .delete()
@@ -184,7 +176,8 @@ const ContasAReceber = () => {
 
   return (
     <div className="page">
-      <Navbar />
+      {/* Navbar externa é renderizada aqui */}
+      <Navbar /> 
       <ModalCadastro 
         show={showModal} 
         onClose={() => setShowModal(false)} 
@@ -198,7 +191,7 @@ const ContasAReceber = () => {
           <nav className="menu-nav">
             <div className="menu-item"> <FaTachometerAlt /> Visão Geral/Dashboard </div>
             <div className="menu-item active"> <FaDollarSign /> Contas a Receber </div>
-            <div className="menu-item"> <FaDollarSign /> Contas a Pagar </div> {/* Ajustado para Pagar */}
+            <div className="menu-item"> <FaDollarSign /> Contas a Pagar </div>
             <div className="menu-item"> <FaChartBar /> Fluxo de Caixa </div>
             <div className="menu-item"> <IoMdCheckboxOutline /> Lançamentos </div>
             <div className="menu-item"> <FaChartBar /> Relatórios </div>
