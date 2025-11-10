@@ -1,0 +1,267 @@
+/* Variáveis para cores */
+:root {
+  --primary-color: #38761d; /* Verde escuro */
+  --secondary-color: #e6e6e6; /* Cinza claro de fundo */
+  --sidebar-active-bg: #4c8c4a; /* Verde mais claro para item ativo */
+  --text-color: #333;
+  --status-vencer: #d9ead3; /* Verde claríssimo */
+  --status-atraso: #f4cccc; /* Vermelho claríssimo */
+  --status-text-vencer: #274e13; /* Verde escuro para texto */
+  --status-text-atraso: #a61c00; /* Vermelho escuro para texto */
+}
+
+/* 1. Layout Geral */
+.app-container {
+  display: grid;
+  grid-template-rows: 60px 1fr;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: var(--secondary-color);
+}
+
+/* Header Superior */
+.top-header {
+  grid-row: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.header-icons .icon {
+  margin-left: 15px;
+  font-size: 1.2em;
+  color: #666;
+  cursor: pointer;
+}
+
+.user-avatar {
+  font-size: 1.5em; /* Aumenta o tamanho do avatar */
+}
+
+/* 2. Área Principal (Sidebar + Conteúdo) */
+.main-content-area {
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: 250px 1fr; /* Largura da sidebar */
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: #fff;
+  padding: 20px 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 0 20px;
+  /* Simulação de logo */
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.menu-item svg {
+  margin-right: 10px;
+  font-size: 1em;
+}
+
+.menu-item:hover:not(.active) {
+  background-color: var(--secondary-color);
+}
+
+.menu-item.active {
+  background-color: var(--sidebar-active-bg);
+  color: white;
+  border-left: 5px solid var(--primary-color); /* Linha de destaque */
+}
+
+/* 3. Conteúdo Principal */
+.content-body {
+  padding: 20px;
+  overflow-y: auto; /* Para rolagem se o conteúdo for grande */
+}
+
+.content-title {
+  font-size: 1.5em;
+  color: var(--text-color);
+  margin-bottom: 20px;
+}
+
+/* Barra de Filtros */
+.filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.dropdown-container {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  background-color: #f9f9f9;
+}
+
+.filter-options {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-secondary {
+  background-color: #fff;
+  color: var(--primary-color);
+  padding: 10px 15px;
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Cartão de Resumo */
+.total-card {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 15px;
+  border-radius: 8px 8px 0 0; /* Apenas na parte superior */
+  font-weight: normal;
+  margin-bottom: -1px; /* Para 'grudar' na tabela */
+}
+
+.total-card strong {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+/* Tabela */
+.table-container {
+  background-color: white;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  background-color: #f7f7f7;
+  padding: 10px 15px;
+  text-align: left;
+  font-weight: bold;
+  color: #666;
+  border-bottom: 1px solid #eee;
+}
+
+tbody tr {
+  border-bottom: 1px solid #eee;
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+
+tbody td {
+  padding: 12px 15px;
+  color: var(--text-color);
+  font-size: 0.95em;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 0.85em;
+  display: inline-block;
+  text-align: center;
+}
+
+.status-vencer {
+  background-color: var(--status-vencer);
+  color: var(--status-text-vencer);
+}
+
+.status-atraso {
+  background-color: var(--status-atraso);
+  color: var(--status-text-atraso);
+}
+
+.action-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.action-icon {
+  color: #999;
+  cursor: pointer;
+}
+
+.loading-message, .error-message, .empty-state {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.2em;
+}
+
+.error-message {
+    color: var(--status-text-atraso);
+}
+/* Exemplo de novo status (se você tiver 'PAGO' na sua DB) */
+.status-pago {
+    background-color: #d9ead3; /* Cor verde para pago */
+    color: #274e13;
+}
+/* Certifique-se que o status no CSS corresponda ao que vem da DB */
+.status-em-atraso { /* Novo nome para a classe, baseado no status da DB */
+    background-color: var(--status-atraso);
+    color: var(--status-text-atraso);
+}
+.status-a-vencer { /* Novo nome para a classe, baseado no status da DB */
+    background-color: var(--status-vencer);
+    color: var(--status-text-vencer);
+}
