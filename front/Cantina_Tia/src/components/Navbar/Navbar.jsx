@@ -14,7 +14,7 @@ const Navbar = () => {
         <nav id="nav-menu" data-open={open}>
           <NavLink to="/dashboard" className="nav-items" onClick={() => setOpen(false)}>Pedidos</NavLink>
           <NavLink to="/menu" className="nav-items" onClick={() => setOpen(false)}>Cardápio</NavLink>
-          <NavLink to="/estoque" className="nav-items" onClick={() => setOpen(false)}>Estoque</NavLink>
+          {/* <NavLink to="/estoque" className="nav-items" onClick={() => setOpen(false)}>Estoque</NavLink> */}
           <NavLink to="/contabilidade" className="nav-items" onClick={() => setOpen(false)}>Contabilidade</NavLink>
         </nav>
         <div className="nav-actions">
