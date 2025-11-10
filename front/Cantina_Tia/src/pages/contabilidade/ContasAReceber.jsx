@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { supabase } from './supabaseClient'; 
+import { supabase } from '../../../lib/supabaseclient';
 import './ContasAReceber.css';
 
 // ----------------------------------------------------
