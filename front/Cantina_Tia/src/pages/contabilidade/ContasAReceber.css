@@ -36,47 +36,6 @@ body {
 }
 
 /* ----------------------------------
- * 1. NAVBAR - Nova Estrutura de Header 
- * ---------------------------------- */
-#navbar {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-#container-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: min(1200px, 92%);
-  margin-inline: auto;
-  padding: 16px 0;
-}
-#logo-nav {
-  /* Substitua pelo seu logo real, se houver */
-  font-family: "Bagel Fat One", system-ui;
-  font-size: 24px;
-  color: var(--brand);
-}
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-.nav-actions .icon {
-  font-size: 1.2em;
-  color: var(--muted);
-  cursor: pointer;
-}
-.user-avatar {
-  font-size: 1.5em; 
-}
-.page {
-  min-height: 100dvh;
-}
-
-/* ----------------------------------
  * 2. LAYOUT GERAL (Sidebar + Conteúdo)
  * ---------------------------------- */
 .app-container {
