@@ -4,7 +4,7 @@ import Login from "../pages/login/Login";
 import Register from "../pages/Cadastrar/Register";
 import Dashboard from "../pages/dashboard/Dashboard";
 import Menu from "../pages/menu/Menu";
-import Menu from "../pages/contabilidade/ContasAPagar";
+import Contabilidade from "../pages/contabilidade/ContasAPagar";
 
 function Rotas() {
     return(
@@ -18,7 +18,7 @@ function Rotas() {
                         <Route path="/cadastrar" element={<Register />} />
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/menu" element={<Menu />} />
-                        <Route path="/contabilidade" element={<ContasAPagar />} />
+                        <Route path="/contabilidade" element={<Contabilidade />} />
                     </Routes>
 
             </Router>
