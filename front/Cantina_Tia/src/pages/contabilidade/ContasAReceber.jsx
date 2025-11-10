@@ -5,10 +5,6 @@ import './ContasAReceber.css';
 // CORREÇÃO: Usando a importação externa da Navbar
 import Navbar from '../../components/Navbar/Navbar'; 
 
-// Importações dos Ícones (necessárias para Navbar, Sidebar e Tabela)
-import { FaBell, FaClock, FaUserCircle, FaTachometerAlt, FaDollarSign, FaChartBar, FaCalendarAlt, FaEdit, FaTrashAlt, FaTimes } from 'react-icons/fa';
-import { IoIosArrowDown, IoMdCheckboxOutline } from 'react-icons/io';
-
 
 // ----------------------------------------------------
 // Componente Modal de Cadastro
