@@ -1,8 +1,6 @@
-// src/pages/Dashboard/Dashboard.jsx
 import React, { useState, useEffect, useCallback } from 'react';
 import './Dashboardcss.css';
 import Navbar from '../../components/Navbar/Navbar';
-
 import { supabase } from '../../../lib/supabaseclient';
 
 const getStatusClass = (status) => {
@@ -24,38 +22,37 @@ const getStatusClass = (status) => {
 const OrderItem = ({ order, onUpdateStatus }) => {
   const isHistory = order.status_pedido === 'FINALIZADO' || order.status_pedido === 'CANCELADO';
   
-  // CORREÇÃO: Usando 'name' e 'image' conforme a string de select da API
   const itemDisplay = order.pedidos_produtos.map((item, index) => (
     <span key={index}>— {item.produto_id.name} ({item.produto_id.image}) x{item.quantidade}</span>
   ));
   
+  const userName = order.user_app_id?.name || 'Usuário Desconhecido';
+
   const renderActions = () => (
-  <div className="order-actions">
-    <button 
-      className="btn-pronto" 
-      onClick={() => onUpdateStatus(order.id, 'FINALIZADO')}
-      // O botão Finalizar deve estar desabilitado se já estiver FINALIZADO ou CANCELADO.
-      // Se estiver em EM PREPARO ou PRONTO, deve estar ativo.
-      disabled={order.status_pedido === 'FINALIZADO' || order.status_pedido === 'CANCELADO'}
-    >
-      Finalizar
-    </button>
-    <button 
-      className="btn-cancelar" 
-      onClick={() => onUpdateStatus(order.id, 'CANCELADO')}
-      disabled={order.status_pedido === 'CANCELADO' || order.status_pedido === 'FINALIZADO'}
-    >
-      Cancelar
-    </button>
-  </div>
-);
+    <div className="order-actions">
+      <button 
+        className="btn-pronto" 
+        onClick={() => onUpdateStatus(order.id, 'FINALIZADO')}
+        disabled={order.status_pedido === 'FINALIZADO' || order.status_pedido === 'CANCELADO'}
+      >
+        Finalizar
+      </button>
+      <button 
+        className="btn-cancelar" 
+        onClick={() => onUpdateStatus(order.id, 'CANCELADO')}
+        disabled={order.status_pedido === 'CANCELADO' || order.status_pedido === 'FINALIZADO'}
+      >
+        Cancelar
+      </button>
+    </div>
+  );
 
   return (
     <>
       <li className={`order ${isHistory ? 'orders--history' : ''}`}>
         <i className={`ponto ${getStatusClass(order.status_pedido)}`} />
         <span className="order-code">{order.id.toString().padStart(3, '0')}</span>
-        <span className="order-name">{order.user_app_id.name}</span>
+        <span className="order-name">{userName}</span>
         
         {!isHistory ? renderActions() : <span className="order-status-history">{order.status_pedido}</span>}
       </li>
@@ -187,7 +184,7 @@ export default function Dashboard() {
                 {historyOrders.map(order => (
                    <OrderItem key={order.id} order={order} onUpdateStatus={handleUpdateStatus} />
                 ))}
-                 {historyOrders.length === 0 && <p className='order sub'>Nenhum histórico recente.</p>}
+                {historyOrders.length === 0 && <p className='order sub'>Nenhum histórico recente.</p>}
               </ul>
             </div>
           </div>
